@@ -5,7 +5,10 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
+echo "=== generate_report.sh ==="
 set -ex
+
+env
 
 # Jenkins Parameterized Trigger Plugin mangles job names as passed via
 # environment variables, replacing most non-alphanumeric chars with
@@ -69,3 +72,5 @@ if [ "$CI_ROOT" ]; then
   		   "${WORKSPACE}/report.html"
     fi
 fi
+
+echo "=== /generate_report.sh ==="
