@@ -155,9 +155,6 @@ pushd $OUTDIR
         git checkout $TEST_DEFINITIONS_REFSPEC
     popd
     cat $MERGE_JSON; echo
-    # Link cloned sources to where merge.sh expects to find them.
-    SHARE_VOLUME=/srv/shared
-    ln -s ${SHARE_VOLUME}/${JOB_NAME}/${BUILD_NUMBER} /home/buildslave/workspace/pfalcon-tf-a-builder
 
     if echo "$JENKINS_URL" | grep -q "oss.arm.com"; then
     bash $TEST_DEF_FOLDER/scripts/tools/code_coverage/fastmodel_baremetal/bmcov/report/branch_coverage/merge.sh \
