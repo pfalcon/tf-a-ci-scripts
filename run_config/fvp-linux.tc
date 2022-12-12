@@ -84,14 +84,15 @@ EOF
 
             inject_bl1() {
                 # Get pre-built rss rom
+                local prebuild_prefix=$tc_prebuilts/tc$plat_variant/$rss_revision
                 if [ ! -f "$archive/rss_rom.bin" ]; then
-                    url="$tc_prebuilts/tc$plat_variant/rss_rom.bin" fetch_file
+                    url="$prebuild_prefix/rss_rom.bin" fetch_file
 		    archive_file "rss_rom.bin"
 		fi
 
 		# Get pre-built rss flash
 		if [ ! -f "$archive/rss_flash.bin" ]; then
-		    url="$tc_prebuilts/tc$plat_variant/rss_flash.bin" fetch_file
+		    url="$prebuild_prefix/rss_flash.bin" fetch_file
 		    archive_file "rss_flash.bin"
 		fi
 

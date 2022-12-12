@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-set_model_path "$warehouse/SysGen/SubSystemModels/11.18/28/models/$model_flavour/FVP_TC2"
+set_model_path "$warehouse/SysGen/SubSystemModels/11.20/24/models/$model_flavour/FVP_TC2"
 
 cat <<EOF >"$model_param_file"
 -C css.terminal_uart_ap.start_port=5000
