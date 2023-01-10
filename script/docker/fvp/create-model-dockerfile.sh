@@ -13,7 +13,7 @@
 
 # globals
 OS="${OS:-ubuntu}"
-OS_VER="${OS_VERSION:-bionic}"
+OS_VER="${OS_VERSION:-jammy}"
 MODEL_DIR="${MODEL_DIR:-/opt/model}"
 
 function usage() {
