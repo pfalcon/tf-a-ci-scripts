@@ -191,6 +191,9 @@ clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_GPT_SUPPORT=1 PSA_FWU_SUPPO
 # SME and HCX features
 clean_build $fvp_common_flags ENABLE_SME_FOR_NS=1 ENABLE_FEAT_HCX=1
 
+# SME2
+clean_build $fvp_common_flags ENABLE_SME2_FOR_NS=1 ENABLE_SME_FOR_NS=1 ENABLE_FEAT_HCX=1
+
 # Architectural Feature Detection mechanism
 clean_build $fvp_common_flags FEATURE_DETECTION=1
 
