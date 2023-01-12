@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -53,6 +53,8 @@ reset_var has_gicv4_1
 reset_var sve_plugin
 
 reset_var has_sme
+
+reset_var has_sme2
 
 reset_var bmcov_plugin
 
@@ -113,6 +115,7 @@ ${sve_plugin+--plugin=$sve_plugin_path}
 ${sve_plugin+-C SVE.ScalableVectorExtension.enable_at_reset=0}
 ${sve_plugin+-C SVE.ScalableVectorExtension.veclen=$((128 / 8))}
 ${has_sme+-C SVE.ScalableVectorExtension.has_sme=1}
+${has_sme2+-C SVE.ScalableVectorExtension.has_sme2=1}
 
 ${bmcov_plugin+--plugin=$bmcov_plugin_path}
 
