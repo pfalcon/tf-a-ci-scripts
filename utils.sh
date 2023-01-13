@@ -16,6 +16,8 @@
 ci_root="${ci_root:-$CI_ROOT}"
 ci_root="${ci_root:?}"
 
+source "${ci_root}/lava_utils.sh"
+
 # Optionally source a file containing environmental settings.
 if [ -n "$host_env" ]; then
   source "$host_env"
@@ -171,85 +173,6 @@ filter_artefacts(){
 			artefacts+=("${artefact}")
 		fi
 	done
-}
-
-gen_lava_job_def() {
-	local yaml_template_file="${yaml_template_file:?}"
-	local yaml_file="${yaml_file:?}"
-	local yaml_job_file="${yaml_job_file}"
-
-	# Bash doesn't have array values, we have to create references to the
-	# array of artefacts and their urls.
-	declare -n artefacts="$1"
-	declare -n artefact_urls="$2"
-
-	readarray -t boot_arguments < "${lava_model_params}"
-
-	# Source runtime environment variables now so that they are accessible from
-	# the LAVA job template.
-	local run_root="${archive}/run"
-	local run_env="${run_root}/env"
-
-	if [ -f "${run_env}" ]; then
-	    source "${run_env}"
-	fi
-
-	# Generate the LAVA job definition, minus the test expectations
-	expand_template "${yaml_template_file}" > "${yaml_file}"
-
-	if [[ ! $model =~ "qemu" ]]; then
-		# Append expect commands into the job definition through
-		# test-interactive commands
-		gen_fvp_yaml_expect >> "$yaml_file"
-	fi
-
-	# create job.yaml
-	cp "$yaml_file" "$yaml_job_file"
-
-	# archive both yamls
-	archive_file "$yaml_file"
-	archive_file "$yaml_job_file"
-}
-
-gen_lava_model_params() {
-	local lava_model_params="${lava_model_params:?}"
-	declare -n macros="$1"
-
-	# Derive LAVA model parameters from the non-LAVA ones
-	cp "${archive}/model_params" "${lava_model_params}"
-
-	if [[ $model =~ "qemu" ]]; then
-		# Strip the model parameters of parameters already specified in the deploy
-		# overlay and job context.
-		sed -i '/-M/d;/kernel/d;/initrd/d;/bios/d;/cpu/d;/^[[:space:]]*$/d' \
-				$lava_model_params
-	elif [[ ! $model =~ "qemu" ]]; then
-		# FIXME find a way to properly match FVP configurations.
-		# Ensure braces in the FVP model parameters are not accidentally
-		# interpreted as LAVA macros.
-		sed -i -e 's/{/{{/g' "${lava_model_params}"
-		sed -i -e 's/}/}}/g' "${lava_model_params}"
-	else
-		echo "Unsupported emulated platform $model."
-	fi
-
-	# LAVA expects binary paths as macros, i.e. `{X}` instead of `x.bin`, so
-	# replace the file paths in our pre-generated model parameters.
-	for regex in "${!macros[@]}"; do
-		sed -i -e "s!${regex}!${macros[${regex}]}!" "${lava_model_params}"
-	done
-}
-
-gen_yaml_template() {
-	local target="${target-fvp}"
-	local yaml_template_file="${yaml_template_file-$workspace/${target}_template.yaml}"
-
-	local payload_type="${payload_type:?}"
-
-	cp "${ci_root}/script/lava-templates/${target}-${payload_type:?}.yaml" \
-		"${yaml_template_file}"
-
-	archive_file "$yaml_template_file"
 }
 
 # Generate link to an archived binary.
