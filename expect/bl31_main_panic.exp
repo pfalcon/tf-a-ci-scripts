@@ -1,0 +1,17 @@
+#
+# Copyright (c) 2023, Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# Expect script for Trusted Firmware Test Framework
+#
+
+source [file join [file dirname [info script]] handle-arguments.inc]
+
+expect_string "BACKTRACE: START: bl31_main"
+expect_string "BACKTRACE: END: bl31_main"
+expect_string "PANIC in EL3."
+
+expect_string "x30"
+source [file join [file dirname [info script]] exception_gp_regs.inc]
+source [file join [file dirname [info script]] exception_sys_regs.inc]
