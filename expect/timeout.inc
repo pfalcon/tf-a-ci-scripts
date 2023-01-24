@@ -19,7 +19,7 @@ expect {
         message "expected hang, found crash dump"
     }
 
-    "Unhandled Exception from EL" {
+    "Unhandled Exception from lower EL" {
         message "expected hang, found crash dump"
     }
 
