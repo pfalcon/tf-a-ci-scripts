@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -12,7 +12,7 @@ export TEST_DEFINITIONS_REFSPEC=${TEST_DEFINITIONS_REFSPEC:-tools-coverage-workf
 
 else
 
-export TEST_DEFINITIONS_REPO=${TEST_DEFINITIONS_REPO:-https://review.trustedfirmware.org/ci/qa-tools}
-export TEST_DEFINITIONS_REFSPEC=${TEST_DEFINITIONS_REFSPEC:-openci}
+export TEST_DEFINITIONS_REPO=${QA_TOOLS_REPO:-https://review.trustedfirmware.org/ci/qa-tools}
+export TEST_DEFINITIONS_REFSPEC=${QA_TOOLS_BRANCH:-openci}
 
 fi
