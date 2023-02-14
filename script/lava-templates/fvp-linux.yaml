@@ -16,9 +16,9 @@ timeouts:
   connection:
     seconds: 10
   job:
-    minutes: 30
+    minutes: 35
   action:
-    minutes: 20
+    minutes: 30
   actions:
     auto-login-action:
       minutes: 5
