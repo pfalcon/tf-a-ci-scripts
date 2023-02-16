@@ -540,7 +540,7 @@ EOF
 
 	# Build TF. Since build output is being directed to the build log, have
 	# descriptor 3 point to the current terminal for build wrappers to vent.
-	$tf_build_wrapper make $make_j_opts $(cat "$config_file") \
+	$tf_build_wrapper poetry run make $make_j_opts $(cat "$config_file") \
 		DEBUG="$DEBUG" V=1 SPIN_ON_BL1_EXIT="$connect_debugger" \
 		$build_targets 3>&1 &>>"$build_log" || fail_build
 	)
@@ -1448,7 +1448,12 @@ for mode in $modes; do
 			source "$plat_utils"
 		fi
 
-		source "$ci_root/script/install_python_deps_tf.sh"
+		# Install python build dependencies
+		if is_arm_jenkins_env; then
+			source "$ci_root/script/install_python_deps_tf.sh"
+		fi
+
+		poetry -C "$tf_root" install --without doc
 
 		archive="$build_archive"
 		tf_build_root="$tf_root/build"
