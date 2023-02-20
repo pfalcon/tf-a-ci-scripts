@@ -136,10 +136,10 @@ def main():
         debug_print("# score after process_ps:", score)
 
         ln = f"{cmt.summary}:    {score}"
-        file_str += ln + "\n"
         print(ln)
 
         if score > 0:
+            file_str += ln + "\n"
             at_least_one_match = True
 
         cnt = cnt - 1
