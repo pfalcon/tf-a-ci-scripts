@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2023, Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+pre_tf_build() {
+	# Apply fault injection patches
+	apply_tf_patch "fault_inject/injected-fault-record-and-handler.patch"
+	apply_tf_patch "fault_inject/explicit-events.patch"
+	apply_tf_patch "fault_inject/fvp-fault-handlers.patch"
+}
