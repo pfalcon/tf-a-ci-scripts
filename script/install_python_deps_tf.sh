@@ -1,12 +1,16 @@
 #!/usr/bin/env bash
 
 #
-# Copyright (c) 2021 Arm Limited. All rights reserved.
+# Copyright (c) 2021-2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-python3 -m venv .venv
+if [ $(python3 -c 'import sys; print(sys.version_info[1])') -lt 7 ]; then
+    function python3() { python3.8 "${@}"; }
+fi
+
+python3 -m virtualenv .venv
 
 source .venv/bin/activate
 
