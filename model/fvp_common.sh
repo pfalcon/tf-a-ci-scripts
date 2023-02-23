@@ -113,12 +113,18 @@ EOF
 fi
 
 # TFTF: There are two scenarions where simulation should be shutdown
-# when a EOT (ASCII 4) char is transmitted: on local or Open CI runs.
-# For the latter case, shutdown is required so further commands parse
-# or transfer any produced files during execution, i.e. trace code
-# coverage logs
+# when a EOT (ASCII 4) char is transmitted: on local or some OpenCI
+# runs. In the latter case, shutdown is required for code coverage
+# runs, so that FVP trace log was properly dumped (and parsed by LAVA).
+# Don't use it for other OpenCI runs, as it may lead to race condition
+# with LAVA's capturing of FVP output.
 if echo "$RUN_CONFIG" | grep -iq 'tftf'; then
-    if ! is_arm_jenkins_env || upon "$local_ci"; then
+    is_arm_env=0
+    if is_arm_jenkins_env; then
+        is_arm_env=1
+    fi
+
+    if [ "$is_arm_env" == "0" -a "$COVERAGE_ON" == "1" ] || upon "$local_ci"; then
 	cat <<EOF >>"$model_param_file"
 -C bp.pl011_uart0.shutdown_on_eot=1
 EOF
