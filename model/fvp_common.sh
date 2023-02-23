@@ -128,5 +128,8 @@ if echo "$RUN_CONFIG" | grep -Eiq 'tftf|spm'; then
 	cat <<EOF >>"$model_param_file"
 -C bp.pl011_uart0.shutdown_on_eot=1
 EOF
+        echo "Using shutdown_on_eot=1"
+    else
+        echo "Not using shutdown_on_eot=1"
     fi
 fi
