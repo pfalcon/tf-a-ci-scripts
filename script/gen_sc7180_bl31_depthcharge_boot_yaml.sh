@@ -56,13 +56,14 @@ actions:
 - test:
     timeout:
       minutes: 5
-    monitors:
-    - name: "BL31_boot_test"
-      start: "Initializing runtime services"
-      end: "This is a TF-A test build\\\\. Halting\\\\.{3}"
-      pattern: "Starting depthcharge on Lazor\\\\.{3}"
-      fixupdict:
-          '!': pass
-          '': fail
+    interactive:
+    - name: int_1
+      prompts: ["Starting depthcharge on Lazor"]
+      script:
+      - command:
+    - name: int_2
+      prompts: ["This is a TF-A test build. Halting"]
+      script:
+      - command:
 
 EOF
