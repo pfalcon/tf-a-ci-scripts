@@ -25,8 +25,8 @@ sp2_addr="${sp2_addr:-0x7100000}"
 sp3_addr="${sp3_addr:-0x7200000}"
 sp4_addr="${sp4_addr:-0x7600000}"
 # SPM out directories
-export spm_secure_out_dir="${spm_secure_out_dir:-secure_aem_v8a_fvp_clang}"
-export spm_non_secure_out_dir="${spm_non_secure_out_dir:-aem_v8a_fvp_clang}"
+export spm_secure_out_dir="${spm_secure_out_dir:-secure_aem_v8a_fvp_vhe_clang}"
+export spm_non_secure_out_dir="${spm_non_secure_out_dir:-aem_v8a_fvp_vhe_clang}"
 
 ns_bl1u_addr="${ns_bl1u_addr:-0x0beb8000}"
 fwu_fip_addr="${fwu_fip_addr:-0x08400000}"
