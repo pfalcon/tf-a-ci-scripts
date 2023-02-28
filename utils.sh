@@ -641,7 +641,7 @@ linaro_release="${linaro_release:-$linaro_2001_release}"
 mbedtls_version="${mbedtls_version:-3.3.0}"
 
 # mbedTLS archive public hosting available at github.com
-mbedtls_archive="${mbedtls_archive:-https://github.com/Mbed-TLS/mbedtls/archive/refs/tags/v${mbedtls_version}.tar.gz}"
+mbedtls_archive="${mbedtls_archive:-https://github.com/Mbed-TLS/mbedtls/archive/mbedtls-${mbedtls_version}.tar.gz}"
 
 # FIXME: workaround to allow all on-prem host machines to access the latest LLVM
 # LLVM archive public hosting available at github.com
