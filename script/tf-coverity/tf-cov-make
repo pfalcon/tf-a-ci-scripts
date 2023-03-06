@@ -141,9 +141,9 @@ clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=1 ARM_ARCH_MINOR=4 \
 clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=0 SPMC_AT_EL3=1
 
 #BL2 at EL3 support
-clean_build $fvp_common_flags BL2_AT_EL3=1
+clean_build $fvp_common_flags RESET_TO_BL2=1
 clean_build $fvp_common_flags CROSS_COMPILE=arm-none-eabi- \
-    ARCH=aarch32 AARCH32_SP=sp_min BL2_AT_EL3=1
+    ARCH=aarch32 AARCH32_SP=sp_min RESET_TO_BL2=1
 
 # RAS Extension Support
 clean_build $fvp_common_flags EL3_EXCEPTION_HANDLING=1 \
@@ -308,7 +308,7 @@ make $(common_flags) \
      TARGET_PLATFORM=fpga \
      ENABLE_STACK_PROTECTOR=strong \
      ENABLE_PIE=1 \
-     BL2_AT_EL3=1 \
+     RESET_TO_BL2=1 \
      SPMD_SPM_AT_SEL2=0 \
      ${ARM_TBB_OPTIONS} \
      CREATE_KEYS=1 \

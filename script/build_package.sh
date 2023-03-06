@@ -438,7 +438,7 @@ update_fip_hw_config() {
 		"$(get_tf_opt RESET_TO_BL31)" | \
 		"$(get_tf_opt ARM_LINUX_KERNEL_AS_BL33)" | \
 		"$(get_tf_opt RESET_TO_SP_MIN)" | \
-		"$(get_tf_opt BL2_AT_EL3)")
+		"$(get_tf_opt RESET_TO_BL2)")
 			return 0;;
 	esac
 
