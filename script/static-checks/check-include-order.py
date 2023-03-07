@@ -26,8 +26,6 @@ VALID_FILE_EXTENSIONS = (".c", ".S", ".h")
 IGNORED_FOLDERS = (
     "include/lib/stdlib",
     "include/lib/libc",
-    "include/lib/libfdt",
-    "lib/libfdt",
     "lib/libc",
     "lib/stdlib",
 )
@@ -89,6 +87,13 @@ def inc_order_is_correct(inc_list, path, commit_hash=""):
     plat_incs.difference_update(plat_common_incs)
     libc_incs = dir_include_paths("include/lib/libc")
     proj_incs = dir_include_paths("include/")
+    third_party_incs = []
+    third_party_incs.append(dir_include_paths("mbedtls"))
+    third_party_incs.append(dir_include_paths("include/lib/libfdt"))
+    third_party_incs.append(dir_include_paths("lib/compiler-rt"))
+    third_party_incs.append(dir_include_paths("lib/libfdt"))
+    third_party_incs.append(dir_include_paths("lib/zlib"))
+
     indices = []
 
     for inc in inc_list:
@@ -96,10 +101,12 @@ def inc_order_is_correct(inc_list, path, commit_hash=""):
         inc_group_index = int(inc_path not in libc_incs)
 
         if inc_group_index:
-            if inc_path in proj_incs:
+            if inc_path in third_party_incs:
                 inc_group_index = 1
-            elif inc_path in plat_incs:
+            elif inc_path in proj_incs:
                 inc_group_index = 2
+            elif inc_path in plat_incs:
+                inc_group_index = 3
 
         incs[inc_group_index].append(inc_path)
         indices.append((inc_group_index, inc))
