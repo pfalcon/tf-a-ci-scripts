@@ -117,6 +117,8 @@ exclude_paths = [
     ("plat/arm/board/tc/rss_ap_tests.c", "Only used for testing on arm/tc platform"),
     ("plat/arm/board/tc/rss_ap_testsuites.c", "Only used for testing on arm/tc platform"),
 
+    ("plat/arm/board/tc/nv_counter_test.c", "Not used yet."),
+
     # Exclude the following files used for TC host tools (fiptool)
     ("plat/arm/board/tc/plat_def_uuid_config.c", "Used to build TC fiptool"),
 
