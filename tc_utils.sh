@@ -20,14 +20,13 @@ kernel_addr=0x80000
 scp_ram_addr=0x0bd80000
 
 rss_rom_addr=0x11000000
-rss_flash_addr=0x31000000
 vmmaddrwidth=23
-rvbaddr_lw=0x1000
+rvbaddr_lw=0x0000
 rvbaddr_up=0x0000
 
 # AP bl1 0x00 is mapped to 0x70000000 in RSS memory map
 ap_bl1_flash_load_addr=0x70000000
-ap_bl1_flash_size=0x20000
+ap_bl1_flash_size=0x80000
 rss_revision="199e090f8"
 
 # Hafnium build repo containing Secure hafnium binaries
