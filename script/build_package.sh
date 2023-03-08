@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -163,7 +163,7 @@ collect_build_artefacts() {
 		return
 	fi
 
-	if ! find "$from" \( -name "*.bin" -o -name '*.elf' -o -name '*.dtb' -o -name '*.axf' \) -exec cp -t "${to:?}" '{}' +; then
+	if ! find "$from" \( -name "*.bin" -o -name '*.elf' -o -name '*.dtb' -o -name '*.axf' -o -name '*.stm32' \) -exec cp -t "${to:?}" '{}' +; then
 		echo "You probably are running local CI on local repositories."
 		echo "Did you set 'dont_clean' but forgot to run 'distclean'?"
 		die
