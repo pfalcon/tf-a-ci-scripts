@@ -10,7 +10,6 @@ set -e
 # Enable job control to have background processes run in their own process
 # group. That way, we can kill a background process group in one go.
 set -m
-
 ci_root="$(readlink -f "$(dirname "$0")/..")"
 source "$ci_root/utils.sh"
 
@@ -169,7 +168,6 @@ sed '/^\s*$/d' < model_params | sort | sed 's/^/\t/;s/$/ \\/' >> "$run_sh"
 
 if [ "${COVERAGE_ON}" == "1" ]; then
 	# Adding code coverage plugin
-	echo -e "\t-C TRACE.CoverageTrace.trace-file-prefix=$trace_file_prefix \\" >> "$run_sh"
 	echo -e "\t--plugin $coverage_trace_plugin \\" >> "$run_sh"
 fi
 echo -e "\t\"\$@\"" >> "$run_sh"

@@ -1,32 +1,29 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2020, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
+set -x
 REPORT_JSON=$1
 REPORT_HTML=$2
-TEST_DEF_FOLDER="${WORKSPACE}/test-definitions"
 
 if echo "$JENKINS_URL" | grep -q "oss.arm.com"; then
-ARTIFACT_PATH='artifact/html'
-INFO_PATH='lcov_report/coverage.info'
-JSON_PATH='output_file.json'
+  ARTIFACT_PATH='artifact/html/qa-code-coverage'
+  INFO_PATH='coverage.info'
+  JSON_PATH='intermediate_layer.json'
 else
-ARTIFACT_PATH='artifact'
-INFO_PATH='trace_report/coverage.info'
-JSON_PATH='config_file.json'
+  ARTIFACT_PATH='artifact'
+  INFO_PATH='trace_report/coverage.info'
+  JSON_PATH='config_file.json'
 fi
-
-BRANCH_FOLDER="scripts/tools/code_coverage/fastmodel_baremetal/bmcov/report/branch_coverage"
-BMCOV_REPORT_FOLDER="$OUTDIR/$TEST_DEF_FOLDER/scripts/tools/code_coverage/fastmodel_baremetal/bmcov/report"
 
 #################################################################
 # Create json file for input to the merge.sh for Code Coverage
 # Globals:
 #   REPORT_JSON: Json file for SCP and TF ci gateway test results
-#   MERGE_JSON: Json file to be used as input to the merge.sh
+#   MERGE_CONFIGURATION: Json file to be used as input to the merge.sh
 # Arguments:
 #   None
 # Outputs:
@@ -46,7 +43,8 @@ merge_number = 0
 test_results = data['test_results']
 test_files = data['test_files']
 for index, build_number in enumerate(test_results):
-    if "bmcov" in test_files[index] and test_results[build_number] == "SUCCESS":
+    if ("bmcov" in test_files[index] or
+    "code-coverage" in test_files[index]) and test_results[build_number] == "SUCCESS":
         merge_number += 1
         base_url = "{}job/{}/{}/{}".format(
                         server, data['job'], build_number, "$ARTIFACT_PATH")
@@ -63,23 +61,78 @@ for index, build_number in enumerate(test_results):
                                 }
                         })
 merge_json = { 'files' : _files }
-with open("$MERGE_JSON", 'w') as outfile:
-    json.dump(merge_json, outfile)
+with open("$MERGE_CONFIGURATION", 'w') as outfile:
+    json.dump(merge_json, outfile, indent=4)
 print(merge_number)
 EOF
 }
 
-generate_bmcov_header() {
-    cov_html=$1
-    out_report=$2
+generate_header() {
+    local cov_html=${OUTDIR}/${COVERAGE_FOLDER}/index.html
+    local out_report=$1
 python3 - << EOF
 import re
+import json
 cov_html="$cov_html"
 out_report = "$out_report"
+confs = ""
+with open("$REPORT_JSON") as json_file:
+    data = json.load(json_file)
+test_files = data['test_files']
+test_results = data['test_results']
+for index, build_number in enumerate(test_results):
+  test_file = test_files[index]
+  test_configuration = test_file.rsplit('%', 1)
+  if len(test_configuration) > 1:
+    confs += '<a target="_blank" href="artifact/${jenkins_archive_folder}/${COVERAGE_FOLDER}/{}/index.html">{}</a>'.format(build_number,
+      test_configuration[1])
+
 with open(cov_html, "r") as f:
     html_content = f.read()
 items = ["Lines", "Functions", "Branches"]
 s = """
+<style>
+.dropbtn {
+  background-color: #04AA6D;
+  color: white;
+  padding: 16px;
+  font-size: 16px;
+  border: none;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f1f1f1;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: #ddd;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {display: block;}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {background-color: #3e8e41;}
+</style>
     <div id="div-cov">
     <hr>
         <table id="table-cov">
@@ -115,12 +168,20 @@ s = s + """
             </tbody>
         </table>
         <p>
-        <button onclick="window.open('artifact/$index/index.html','_blank');">Coverage Report</button>
+        <button onclick="window.open('artifact/${jenkins_archive_folder}/${COVERAGE_FOLDER}/index.html','_blank');">Total Coverage Report</button>
         </p>
+        <div class="dropdown">
+          <button class="dropbtn">Coverage Reports($number_of_files_to_merge)</button>
+          <div class="dropdown-content">
+          """ + confs + """
+          </div>
+        </div>
     </div>
+
 <script>
     document.getElementById('tf-report-main').appendChild(document.getElementById("div-cov"));
 </script>
+
 """
 with open(out_report, "a") as f:
     f.write(s)
@@ -131,38 +192,33 @@ index=""
 case "$TEST_GROUPS" in
     scp*)
             project="scp"
-            OUTDIR=${WORKSPACE}/reports
-            index=reports;;
+            jenkins_archive_folder=reports;;
     tf*)
             project="trusted_firmware"
-            OUTDIR=${WORKSPACE}/merge/outdir
-            index=merge/outdir;;
+            jenkins_archive_folder=merge/outdir;;
     *)
             exit 0;;
 esac
-export MERGE_JSON="$OUTDIR/merge.json"
-source "$CI_ROOT/script/test_definitions.sh"
+OUTDIR=${WORKSPACE}/${jenkins_archive_folder}
+source "$CI_ROOT/script/qa-code-coverage.sh"
+export MERGE_CONFIGURATION="$OUTDIR/merge_configuration.json"
+COVERAGE_FOLDER=lcov
+cd $WORKSPACE
+deploy_qa_tools
+cd -
 mkdir -p $OUTDIR
 pushd $OUTDIR
-    merge_files=$(create_merge_cfg)
-    echo "Merging $merge_files coverage files..."
+    number_of_files_to_merge=$(create_merge_cfg)
+    echo "Merging $number_of_files_to_merge coverage files..."
     # Only merge when more than 1 test result
-    if [ "$merge_files" -lt 2 ] ; then
+    if [ "$number_of_files_to_merge" -lt 2 ] ; then
+        echo "Only one file to merge."
         exit 0
     fi
-    git clone $TEST_DEFINITIONS_REPO $TEST_DEF_FOLDER
-    pushd $TEST_DEF_FOLDER
-        git checkout $TEST_DEFINITIONS_REFSPEC
-    popd
 
-    if echo "$JENKINS_URL" | grep -q "oss.arm.com"; then
-    bash $TEST_DEF_FOLDER/scripts/tools/code_coverage/fastmodel_baremetal/bmcov/report/branch_coverage/merge.sh \
-        -j $MERGE_JSON -l ${OUTDIR} -p $project
-    else
-    bash $TEST_DEF_FOLDER/coverage-tool/coverage-reporting/merge.sh \
-        -j $MERGE_JSON -l ${OUTDIR} -w $SHARE_FOLDER
-    fi
+    bash ${WORKSPACE}/qa-tools/coverage-tool/coverage-reporting/merge.sh \
+        -j $MERGE_CONFIGURATION -l ${OUTDIR}/${COVERAGE_FOLDER} -w $WORKSPACE -c -g
 
-    generate_bmcov_header ${OUTDIR}/index.html ${REPORT_HTML}
+    generate_header ${REPORT_HTML}
     cp ${REPORT_HTML} $OUTDIR
 popd
