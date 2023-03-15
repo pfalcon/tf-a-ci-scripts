@@ -34,7 +34,7 @@ timeouts:
   job:
     minutes: 30
   action:
-    minutes: 2
+    minutes: 10
   connection:
     minutes: 5
 priority: medium
@@ -46,7 +46,7 @@ actions:
     to: flasher
     images:
       image:
-        url: https://people.linaro.org/~theodore.grey/trusted-firmware/asurada_tf-a-ci_golden_image.bin.gz
+        url: https://images.validation.linaro.org/people.linaro.org/~theodore.grey/trusted-firmware/asurada_tf-a-ci_golden_image.bin.gz
       bl31:
         url: $bl31_url
 - boot:
@@ -54,11 +54,14 @@ actions:
       minutes: 2
     method: minimal
 - test:
-    monitors:
-    - name: "BL31_boot_test"
-      start: "NOTICE:  MT8192 bl31_setup"
-      end: "This is a TF-A test build\\\\. Halting\\\\.{3}"
-      pattern: "Starting depthcharge on Asurada\\\\.{3}"
-      fixupdict:
-          '!': pass
-          '': fail
+    timeout:
+      minutes: 10
+    interactive:
+    - name: int_1
+      prompts: ["Starting depthcharge on Asurada"]
+      script:
+      - command:
+    - name: int_2
+      prompts: ["This is a TF-A test build. Halting"]
+      script:
+      - command:
