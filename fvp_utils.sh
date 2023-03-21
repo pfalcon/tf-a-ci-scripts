@@ -100,6 +100,7 @@ fvp_models=(
 [cortex-a76x4]="${fvp_arm_std_library};FVP_Base_Cortex-A76"
 [cortex-a77x4]="${fvp_arm_std_library};FVP_Base_Cortex-A77"
 [cortex-a78x4]="${fvp_arm_std_library};FVP_Base_Cortex-A78"
+[cortex-a78aex4]="${fvp_arm_std_library};FVP_Base_Cortex-A78AE"
 [cortex-a78cx4]="${fvp_arm_std_library};FVP_Base_Cortex-A78C"
 [cortex-x2]="${fvp_arm_std_library_11_17};FVP_Base_Cortex-X2x4"
 [cortex-a710]="${fvp_arm_std_library_11_17};FVP_Base_Cortex-A710x4"
