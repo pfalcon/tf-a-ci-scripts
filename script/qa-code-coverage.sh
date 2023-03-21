@@ -30,11 +30,11 @@ INFO_FILE=${CODE_COVERAGE_FOLDER}/coverage.info
 REPORT_FOLDER=${CODE_COVERAGE_FOLDER}/lcov
 
 if echo "$JENKINS_URL" | grep -q "oss.arm.com"; then
-  QA_REPO=${QA_REPO_PUBLIC}
-  QA_REFSPEC=${QA_REFSPEC:-master}
+  QA_REPO=${QA_TOOLS_REPO:-$QA_REPO_PUBLIC}
+  QA_REFSPEC=${QA_TOOLS_BRANCH:-master}
 else
-  QA_REPO="https://review.trustedfirmware.org/ci/qa-tools"
-  QA_REFSPEC="openci"
+  QA_REPO=${QA_TOOLS_REPO:-"https://review.trustedfirmware.org/ci/qa-tools"}
+  QA_REFSPEC=${QA_TOOLS_BRANCH:-"openci"}
 fi
 
 
