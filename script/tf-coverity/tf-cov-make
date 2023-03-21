@@ -735,4 +735,7 @@ clean_build PLAT=msm8939 $(common_flags) SPD=tspd
 # Platforms from Aspeed
 clean_build PLAT=ast2700 $(common_flags) SPD=opteed
 
+# Nuvoton npcm845x platform
+make PLAT=npcm845x $(common_flags) all SPD=opteed
+
 cd ..
