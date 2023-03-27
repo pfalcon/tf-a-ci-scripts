@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2021-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2021-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -15,7 +15,7 @@ post_tf_archive() {
 }
 
 generate_lava_job_template() {
-	payload_type="tftf" gen_fvp_yaml_template
+	payload_type="tftf" gen_yaml_template
 }
 
 generate_lava_job() {

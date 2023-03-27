@@ -185,6 +185,15 @@ gen_lava_job_def() {
 
 	readarray -t boot_arguments < "${lava_model_params}"
 
+	# Source runtime environment variables now so that they are accessible from
+	# the LAVA job template.
+	local run_root="${archive}/run"
+	local run_env="${run_root}/env"
+
+	if [ -f "${run_env}" ]; then
+	    source "${run_env}"
+	fi
+
 	# Generate the LAVA job definition, minus the test expectations
 	expand_template "${yaml_template_file}" > "${yaml_file}"
 

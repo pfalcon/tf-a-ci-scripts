@@ -134,5 +134,5 @@ generate_lava_job_template() {
 	set_uart_port "${archive:?}" 2 5000
 	set_uart_port "${archive:?}" 3 5001
 
-	payload_type="linux" gen_fvp_yaml_template
+	payload_type="linux" gen_yaml_template
 }

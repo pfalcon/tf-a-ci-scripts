@@ -286,21 +286,6 @@ fvp_romlib_cleanup() {
 }
 
 
-
-# Generates the template for YAML-based LAVA job definitions from a file
-# corresponding to the currently-selected payload, e.g.:
-#
-# - `lava-templates/fvp-linux.yaml`
-# - `lava-templates/fvp-tftf.yaml`
-gen_fvp_yaml_template() {
-    local yaml_template_file="${workspace}/fvp_template.yaml"
-
-    cp "${ci_root}/script/lava-templates/fvp-${payload_type:?}.yaml" \
-        "${yaml_template_file}"
-
-    archive_file "${yaml_template_file}"
-}
-
 # Generates the final YAML-based LAVA job definition from a template file.
 #
 # The job definition template is expanded with visibility of all variables that
@@ -357,7 +342,7 @@ gen_fvp_yaml() {
 
     test_config="${TEST_CONFIG}"
 
-    declare -A artefact_filters=(
+    declare -A fvp_artefact_filters=(
         [backup_fip]="backup_fip.bin"
         [bl1]="bl1.bin"
         [bl2]="bl2.bin"
@@ -404,7 +389,7 @@ gen_fvp_yaml() {
         [uboot]="uboot.bin"
     )
 
-    declare -A artefact_urls=(
+    declare -A fvp_artefact_urls=(
         [backup_fip]="$(gen_bin_url backup_fip.bin)"
         [bl1]="$(gen_bin_url bl1.bin)"
         [bl2]="$(gen_bin_url bl2.bin)"
@@ -455,7 +440,7 @@ gen_fvp_yaml() {
     # use macros of the form `{XYZ}`. This is a list of regular expression
     # replacements to run on the model parameters file before we add them to the
     # LAVA job definition.
-    declare -A artefact_macros=(
+    declare -A fvp_artefact_macros=(
         ["[= ]backup_fip.bin"]="={BACKUP_FIP}"
         ["[= ]bl1.bin"]="={BL1}"
         ["[= ]bl2.bin"]="={BL2}"
@@ -503,54 +488,16 @@ gen_fvp_yaml() {
         ["[= ]uboot.bin"]="={UBOOT}"
     )
 
-    declare -a artefacts=()
+    declare -a fvp_artefacts
+    filter_artefacts fvp_artefacts fvp_artefact_filters
 
-    for artefact in "${!artefact_filters[@]}"; do
-        if grep -E -q "${artefact_filters[${artefact}]}" "${archive}/model_params"; then
-            artefacts+=("${artefact}")
-        fi
-    done
+    lava_model_params="${lava_model_params}" \
+      gen_lava_model_params fvp_artefact_macros
 
-    # Derive LAVA model parameters from the non-LAVA ones
-    cp "${archive}/model_params" "${lava_model_params}"
-
-    # Ensure braces in the FVP model parameters are not accidentally interpreted
-    # as LAVA macros.
-    sed -i -e 's/{/{{/g' "${lava_model_params}"
-    sed -i -e 's/}/}}/g' "${lava_model_params}"
-
-    # LAVA expects FVP binary paths as macros, i.e. `{X}` instead of `x.bin`, so
-    # replace the file paths in our pre-generated model parameters.
-    for regex in "${!artefact_macros[@]}"; do
-        sed -i -e "s!${regex}!${artefact_macros[${regex}]}!" \
-            "${lava_model_params}"
-    done
-
-    # Read boot arguments into an array so that the job template file can
-    # iterate over them.
-    readarray -t boot_arguments < "${lava_model_params}"
-
-    # Source runtime environment variables now so that they are accessible from
-    # the LAVA job template.
-    local run_root="${archive}/run"
-    local run_env="${run_root}/env"
-
-    if [ -f "${run_env}" ]; then
-        source "${run_env}"
-    fi
-
-    # Generate the LAVA job definition, minus the test expectations
-    expand_template "${yaml_template_file}" > "${yaml_file}"
-
-    # Append expect commands into the job definition through test-interactive commands
-    gen_fvp_yaml_expect >> "$yaml_file"
-
-    # create job.yaml
-    cp "$yaml_file" "$yaml_job_file"
-
-    # archive both yamls
-    archive_file "$yaml_file"
-    archive_file "$yaml_job_file"
+    yaml_template_file="$yaml_template_file" \
+    yaml_file="$yaml_file" \
+    yaml_job_file="$yaml_job_file" \
+      gen_lava_job_def fvp_artefacts fvp_artefact_urls
 }
 
 gen_fvp_yaml_expect() {

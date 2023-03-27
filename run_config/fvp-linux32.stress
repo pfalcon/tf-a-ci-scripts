@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -15,5 +15,5 @@ fetch_tf_resource() {
 
 generate_lava_job_template() {
 	# No expect tracking as this is an interactive test (test_run=1)
-	payload_type="linux" gen_fvp_yaml_template
+	payload_type="linux" gen_yaml_template
 }
