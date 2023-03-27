@@ -6,7 +6,7 @@
 #
 
 fetch_tf_resource() {
-	kernel_type="fvp-busybox-uboot" get_kernel
+	image="kernel" type="fvp-busybox-uboot" get_boot_image
 }
 
 generate_lava_job_template() {

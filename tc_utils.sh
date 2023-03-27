@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -19,8 +19,8 @@ case "${plat_variant}" in
         ;;
 esac
 
-fvp_kernels[fvp-tc-kernel]="$tc_prebuilts/Image"
-fvp_initrd_urls[fvp-tc-ramdisk]="$tc_prebuilts/uInitrd-busybox.0x88000000"
+kernel_list[tc-kernel]="$tc_prebuilts/Image"
+initrd_list[tc-ramdisk]="$tc_prebuilts/uInitrd-busybox.0x88000000"
 
 initrd_addr=0x8000000
 kernel_addr=0x80000

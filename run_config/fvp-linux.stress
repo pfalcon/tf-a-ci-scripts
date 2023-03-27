@@ -6,8 +6,8 @@
 #
 
 fetch_tf_resource() {
-	kernel_type="fvp-oe-uboot" get_kernel
-	initrd_type="dummy-ramdisk" get_initrd
+	image="kernel" type="fvp-oe-uboot" get_boot_image
+	image="initrd" type="dummy-ramdisk" get_boot_image
 
 	tmp_dir="$(mktempdir)"
 	ln -s "${img_file:?}" "$archive/rootfs.bin"

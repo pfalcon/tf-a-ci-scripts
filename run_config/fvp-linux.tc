@@ -100,8 +100,8 @@ update_fip() {
 }
 
 fetch_tf_resource() {
-	kernel_type="fvp-tc-kernel" get_kernel
-	initrd_type="fvp-tc-ramdisk" get_initrd
+	image="kernel" type="tc-kernel" get_boot_image
+	image="initrd" type="tc-ramdisk" get_boot_image
 
 	# Use SCP binary from SCP build if it exists, or fetch pre-built ones.
 	if [ ! -f "$archive/scp_rom.bin" ]; then

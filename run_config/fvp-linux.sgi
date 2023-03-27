@@ -6,8 +6,8 @@
 #
 
 fetch_tf_resource() {
-	kernel_type="fvp-sgi-busybox" get_kernel
-	initrd_type="fvp-sgi-ramdisk" get_initrd
+	image="kernel" type="sgi-busybox" get_boot_image
+	image="initrd" type="sgi-ramdisk" get_boot_image
 
 	url="$sgi_prebuilts/grub-busybox.img" saveas="busybox.bin" fetch_file
 	url="$sgi_prebuilts/ramdisk-busybox.img" saveas="ramdisk.bin" fetch_file

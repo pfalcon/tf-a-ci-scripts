@@ -6,8 +6,8 @@
 #
 
 fetch_tf_resource() {
-	kernel_type="fvp-aarch32-zimage" get_kernel
-	initrd_type="aarch32-ramdisk" get_initrd
+	image="kernel" type="fvp-aarch32-zimage" get_boot_image
+	image="initrd" type="aarch32-ramdisk" get_boot_image
 }
 
 generate_lava_job_template() {

@@ -9,8 +9,8 @@ source "$ci_root/fvp_utils.sh"
 
 sgi_prebuilts="${sgi_prebuilts:-$css_downloads/sgi/rde1edge}"
 
-fvp_kernels[fvp-sgi-busybox]="$sgi_prebuilts/Image"
-fvp_initrd_urls[fvp-sgi-ramdisk]="$sgi_prebuilts/ramdisk-busybox.img"
+kernel_list[sgi-busybox]="$sgi_prebuilts/Image"
+initrd_list[sgi-ramdisk]="$sgi_prebuilts/ramdisk-busybox.img"
 
 scp_ram_addr=0x0bd80000
 mcp_ram_addr=0x0be00000

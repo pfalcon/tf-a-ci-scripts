@@ -6,6 +6,6 @@
 #
 
 post_tf_build() {
-	get_uboot_bin
+	url="$uboot_url" filename="uboot.bin" fetch_and_archive
 	build_fip BL33="$archive/uboot.bin"
 }

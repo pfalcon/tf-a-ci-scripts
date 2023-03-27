@@ -6,8 +6,7 @@
 #
 
 post_tf_build() {
-
-	get_uefi_bin
+	url="$uefi_ci_bin_url" filename="uefi.bin" fetch_and_archive
 
 	build_fip BL33="$archive/uefi.bin"
 }

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2021-2022 Arm Limited. All rights reserved.
+# Copyright (c) 2021-2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -35,7 +35,7 @@ post_tf_build() {
 	archive_file "mcp_fw.bin"
 
 	# Fetch BL33 [uefi.bin] for Morello
-	uefi_ci_bin_url="$morello_prebuilts/uefi.bin" get_uefi_bin
+	url="$morello_prebuilts/uefi.bin" filename="uefi.bin" fetch_and_archive
 
 	# Create FIP for BL2, BL31, and BL33
 	build_fip BL31="$bl31" BL2="$bl2" BL33="$archive/uefi.bin"
