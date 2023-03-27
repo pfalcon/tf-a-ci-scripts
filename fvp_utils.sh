@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -286,16 +286,6 @@ fvp_romlib_cleanup() {
 }
 
 
-fvp_gen_bin_url() {
-    local bin_mode="${bin_mode:?}"
-    local bin="${1:?}"
-
-    if upon "$jenkins_run"; then
-        echo "$jenkins_url/job/$JOB_NAME/$BUILD_NUMBER/artifact/artefacts/$bin_mode/$bin"
-    else
-        echo "file://$workspace/artefacts/$bin_mode/$bin"
-    fi
-}
 
 # Generates the template for YAML-based LAVA job definitions from a file
 # corresponding to the currently-selected payload, e.g.:
@@ -415,50 +405,50 @@ gen_fvp_yaml() {
     )
 
     declare -A artefact_urls=(
-        [backup_fip]="$(fvp_gen_bin_url backup_fip.bin)"
-        [bl1]="$(fvp_gen_bin_url bl1.bin)"
-        [bl2]="$(fvp_gen_bin_url bl2.bin)"
-        [bl31]="$(fvp_gen_bin_url bl31.bin)"
-        [bl32]="$(fvp_gen_bin_url bl32.bin)"
-        [busybox]="$(fvp_gen_bin_url busybox.bin.gz)"
-        [cactus_primary]="$(fvp_gen_bin_url cactus-primary.pkg)"
-        [cactus_secondary]="$(fvp_gen_bin_url cactus-secondary.pkg)"
-        [cactus_tertiary]="$(fvp_gen_bin_url cactus-tertiary.pkg)"
+        [backup_fip]="$(gen_bin_url backup_fip.bin)"
+        [bl1]="$(gen_bin_url bl1.bin)"
+        [bl2]="$(gen_bin_url bl2.bin)"
+        [bl31]="$(gen_bin_url bl31.bin)"
+        [bl32]="$(gen_bin_url bl32.bin)"
+        [busybox]="$(gen_bin_url busybox.bin.gz)"
+        [cactus_primary]="$(gen_bin_url cactus-primary.pkg)"
+        [cactus_secondary]="$(gen_bin_url cactus-secondary.pkg)"
+        [cactus_tertiary]="$(gen_bin_url cactus-tertiary.pkg)"
         [coverage_trace_plugin]="${coverage_trace_plugin}"
-        [dtb]="$(fvp_gen_bin_url ${model_dtb})"
-        [el3_payload]="$(fvp_gen_bin_url el3_payload.bin)"
+        [dtb]="$(gen_bin_url ${model_dtb})"
+        [el3_payload]="$(gen_bin_url el3_payload.bin)"
         [ete_trace]="${tfa_downloads}/FastModelsPortfolio_${model_version}/plugins/${model_flavour}/libete-plugin.so"
         [etm_trace]="${tfa_downloads}/FastModelsPortfolio_${model_version}/plugins/${model_flavour}/ETMv4ExamplePlugin.so"
-        [fip]="$(fvp_gen_bin_url fip.bin)"
-        [fip_gpt]="$(fvp_gen_bin_url fip_gpt.bin)"
-        [fvp_spmc_manifest_dtb]="$(fvp_gen_bin_url fvp_spmc_manifest.dtb)"
-        [fwu_fip]="$(fvp_gen_bin_url fwu_fip.bin)"
+        [fip]="$(gen_bin_url fip.bin)"
+        [fip_gpt]="$(gen_bin_url fip_gpt.bin)"
+        [fvp_spmc_manifest_dtb]="$(gen_bin_url fvp_spmc_manifest.dtb)"
+        [fwu_fip]="$(gen_bin_url fwu_fip.bin)"
         [generic_trace]="${tfa_downloads}/FastModelsPortfolio_${model_version}/plugins/${model_flavour}/GenericTrace.so"
-        [hafnium]="$(fvp_gen_bin_url hafnium.bin)"
-        [image]="$(fvp_gen_bin_url kernel.bin)"
-        [ivy]="$(fvp_gen_bin_url ivy.pkg)"
-        [manifest_dtb]="$(fvp_gen_bin_url manifest.dtb)"
-        [mcp_fw]="$(fvp_gen_bin_url mcp_fw.bin)"
-        [mcp_ram]="$(fvp_gen_bin_url mcp_ram.bin)"
-        [mcp_rom]="$(fvp_gen_bin_url mcp_rom.bin)"
-        [mcp_rom_hyphen]="$(fvp_gen_bin_url mcp-rom.bin)"
-        [ns_bl1u]="$(fvp_gen_bin_url ns_bl1u.bin)"
-        [ns_bl2u]="$(fvp_gen_bin_url ns_bl2u.bin)"
-        [ramdisk]="$(fvp_gen_bin_url initrd.bin)"
-        [romlib]="$(fvp_gen_bin_url romlib.bin)"
-        [rootfs]="$(fvp_gen_bin_url rootfs.bin.gz)"
-        [host_flash_fip]="$(fvp_gen_bin_url host_flash_fip.bin)"
-        [rss_rom]="$(fvp_gen_bin_url rss_rom.bin)"
-        [secure_hafnium]="$(fvp_gen_bin_url secure_hafnium.bin)"
-        [scp_fw]="$(fvp_gen_bin_url scp_fw.bin)"
-        [scp_ram]="$(fvp_gen_bin_url scp_ram.bin)"
-        [scp_ram_hyphen]="$(fvp_gen_bin_url scp-ram.bin)"
-        [scp_rom]="$(fvp_gen_bin_url scp_rom.bin)"
-        [scp_rom_hyphen]="$(fvp_gen_bin_url scp-rom.bin)"
-        [spm]="$(fvp_gen_bin_url spm.bin)"
-        [tftf]="$(fvp_gen_bin_url tftf.bin)"
-        [tmp]="$(fvp_gen_bin_url tmp.bin)"
-        [uboot]="$(fvp_gen_bin_url uboot.bin)"
+        [hafnium]="$(gen_bin_url hafnium.bin)"
+        [image]="$(gen_bin_url kernel.bin)"
+        [ivy]="$(gen_bin_url ivy.pkg)"
+        [manifest_dtb]="$(gen_bin_url manifest.dtb)"
+        [mcp_fw]="$(gen_bin_url mcp_fw.bin)"
+        [mcp_ram]="$(gen_bin_url mcp_ram.bin)"
+        [mcp_rom]="$(gen_bin_url mcp_rom.bin)"
+        [mcp_rom_hyphen]="$(gen_bin_url mcp-rom.bin)"
+        [ns_bl1u]="$(gen_bin_url ns_bl1u.bin)"
+        [ns_bl2u]="$(gen_bin_url ns_bl2u.bin)"
+        [ramdisk]="$(gen_bin_url initrd.bin)"
+        [romlib]="$(gen_bin_url romlib.bin)"
+        [rootfs]="$(gen_bin_url rootfs.bin.gz)"
+        [host_flash_fip]="$(gen_bin_url host_flash_fip.bin)"
+        [rss_rom]="$(gen_bin_url rss_rom.bin)"
+        [secure_hafnium]="$(gen_bin_url secure_hafnium.bin)"
+        [scp_fw]="$(gen_bin_url scp_fw.bin)"
+        [scp_ram]="$(gen_bin_url scp_ram.bin)"
+        [scp_ram_hyphen]="$(gen_bin_url scp-ram.bin)"
+        [scp_rom]="$(gen_bin_url scp_rom.bin)"
+        [scp_rom_hyphen]="$(gen_bin_url scp-rom.bin)"
+        [spm]="$(gen_bin_url spm.bin)"
+        [tftf]="$(gen_bin_url tftf.bin)"
+        [tmp]="$(gen_bin_url tmp.bin)"
+        [uboot]="$(gen_bin_url uboot.bin)"
     )
 
     # In LAVA we don't provide the paths to the artefacts directly, but instead
