@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -117,16 +117,16 @@ gen_recovery_image() {
 }
 
 gen_juno_yaml() {
-        local yaml_file="$workspace/juno.yaml"
-        local job_file="$workspace/job.yaml"
+	local yaml_file="$workspace/juno.yaml"
+	local job_file="$workspace/job.yaml"
 	local payload_type="${payload_type:?}"
 
 	bin_mode="$mode" juno_revision="$juno_revision" \
 		"$ci_root/script/gen_juno_${payload_type}_yaml.sh" > "$yaml_file"
 
-        cp "$yaml_file" "$job_file"
+	cp "$yaml_file" "$job_file"
 	archive_file "$yaml_file"
-        archive_file "$job_file"
+	archive_file "$job_file"
 }
 
 juno_aarch32_runtime() {
