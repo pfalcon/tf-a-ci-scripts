@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2022 Arm Limited. All rights reserved.
+# Copyright (c) 2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -14,7 +14,7 @@ uefi_url="$tfa_downloads/linux_boot/qemu/QEMU_EFI.fd"
 default_model_dtb="dtb.bin"
 
 # QEMU Kernel URLs
-declare -A plat_kernel_list=(
+declare -A kernel_list=(
 	[qemu-busybox]="$tfa_downloads/linux_boot/Image.gz"
 )
 

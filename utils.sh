@@ -264,12 +264,28 @@ gen_bin_url() {
 	fi
 }
 
-get_kernel() {
-	local kernel_type="${kernel_type:?}"
-	local url="${plat_kernel_list[$kernel_type]}"
+get_boot_image() {
+	local image=${image:?}
+	local type=${type:?}
 
-	url="${url:?}" filename="kernel.bin" fetch_and_archive
+	declare -n image_list=${image_list-${image}_list}
+
+	local url="${image_list[${type}]}"
+
+	url="${url:?}" filename="${image}.bin" fetch_and_archive
 }
+
+get_boot_image_from_fip() {(
+	local url="${url:?}"
+	local image="${image:?}"
+	local output_name="${output_name-bl32.bin}"
+
+	cd "$(mktempdir)"
+
+	extract_fip "$url"
+	mv "$image" "$output_name"
+	archive_file "$output_name"
+)}
 
 # Get the path to the run environment variables file.
 #
