@@ -6,7 +6,7 @@
 #
 
 post_tf_build() {
-	get_psci_reset2_scp_bl2_bin
+	url="${psci_reset2_scp_bl2_url}" filename="scp_bl2.bin" fetch_and_archive
 
 	# Building FIP for this config requires a BL32 built in AArch32, but
 	# we'll only build that later. For now, provide a dummy file; we'll

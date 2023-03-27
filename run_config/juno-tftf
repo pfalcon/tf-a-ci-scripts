@@ -6,7 +6,7 @@
 #
 
 post_tf_build() {
-	get_scp_bl2_bin
+	url="${scp_bl2_url}" filename="scp_bl2.bin" fetch_and_archive
 	build_fip BL33="$archive/tftf.bin" SCP_BL2="$archive/scp_bl2.bin"
 }
 

@@ -30,41 +30,6 @@ juno32_recovery_root_oe="$linaro_release/juno32-latest-oe-uboot"
 juno_rootfs_url="${juno_rootfs_url:-$linaro_release/linaro-image-minimal-genericarmv8-20170127-888.rootfs.tar.gz}"
 juno32_rootfs_url="${juno32_rootfs_url:-$linaro_release/linaro-image-alip-genericarmv7a-20150710-336.rootfs.tar.gz}"
 
-get_optee_bin() {
-	local tmpdir="$(mktempdir)"
-
-	pushd "$tmpdir"
-	extract_fip "$optee_fip_url"
-	mv "tos-fw.bin" "bl32.bin"
-	archive_file "bl32.bin"
-	popd
-}
-
-get_scp_bl2_bin() {
-	url="$scp_bl2_url" saveas="scp_bl2.bin" fetch_file
-	archive_file "scp_bl2.bin"
-}
-
-get_psci_reset2_scp_bl2_bin() {
-	url="$psci_reset2_scp_bl2_url" saveas="scp_bl2.bin" fetch_file
-	archive_file "scp_bl2.bin"
-}
-
-get_uboot32_bin() {
-	local tmpdir="$(mktempdir)"
-
-	pushd "$tmpdir"
-	extract_fip "$uboot32_fip_url"
-	mv "nt-fw.bin" "uboot.bin"
-	archive_file "uboot.bin"
-	popd
-}
-
-get_uboot_bin() {
-	url="$uboot_bl33_url" saveas="uboot.bin" fetch_file
-	archive_file "uboot.bin"
-}
-
 get_ml_uboot_bin() {
 	url="$ml_uboot_bl33_url" saveas="uboot.bin" fetch_file
 	archive_file "uboot.bin"
