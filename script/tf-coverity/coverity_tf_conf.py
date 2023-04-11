@@ -123,4 +123,10 @@ exclude_paths = [
     ("plat/arm/board/tc/plat_def_uuid_config.c", "Used to build TC fiptool"),
 
     ("lib/psa/rss_platform.c", "Not used yet."),
+
+    # Exclude the following files used for Juno host tools (fiptool and cert_create)
+    ("plat/arm/board/juno/certificate/src/juno_tbb_cert.c", "Used to build Juno cert_create"),
+    ("plat/arm/board/juno/certificate/src/juno_tbb_ext.c", "Used to build Juno cert_create"),
+    ("plat/arm/board/juno/certificate/src/juno_tbb_key.c", "Used to build Juno cert_create"),
+    ("plat/arm/board/juno/fip/plat_def_uuid_config.c", "Used to build Juno fiptool"),
 ]
