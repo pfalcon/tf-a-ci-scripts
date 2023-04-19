@@ -12,3 +12,8 @@ post_tf_build() {
         # Create FIP for BL2, BL31, and BL33
         build_fip BL31="$bl31" BL2="$bl2" BL33="$archive/uefi.bin"
 }
+
+generate_lava_job(){
+        target="n1sdp" payload_type="linux" gen_yaml_template
+        gen_n1sdp_yaml
+}

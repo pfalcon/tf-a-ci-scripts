@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2023 Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+post_tf_build() {
+        # Create FIP for BL2, BL31, and BL33
+        build_fip BL31="$bl31" BL2="$bl2" BL33="$archive/tftf.bin"
+}
+
+generate_lava_job(){
+        target="n1sdp" payload_type="tftf" gen_yaml_template
+        gen_n1sdp_yaml
+}
