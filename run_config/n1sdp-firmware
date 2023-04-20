@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2021 Arm Limited. All rights reserved.
+# Copyright (c) 2021-2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
 fetch_tf_resource() {
-        n1sdp_firmware_bin_url="$n1sdp_prebuilts/n1sdp-board-firmware.zip" get_n1sdp_firmware
+        fetch_prebuilt_fw_images
+}
+
+post_fetch_tf_resource() {
+        gen_recovery_image
 }

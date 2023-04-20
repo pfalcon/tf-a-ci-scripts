@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -12,10 +12,12 @@ gen_lava_job_def() {
 
 	# Bash doesn't have array values, we have to create references to the
 	# array of artefacts and their urls.
-	declare -n artefacts="$1"
-	declare -n artefact_urls="$2"
+	declare -n artefacts="${1-null}"
+	declare -n artefact_urls="${2-null}"
 
-	readarray -t boot_arguments < "${lava_model_params}"
+	if [ -f "${lava_model_params}" ]; then
+		readarray -t boot_arguments < "${lava_model_params}"
+	fi
 
 	# Source runtime environment variables now so that they are accessible from
 	# the LAVA job template.

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2023 Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+post_tf_build() {
+        # Fetch BL33 [uefi.bin] for N1SDP
+        url="$n1sdp_prebuilts/uefi.bin" filename="uefi.bin" fetch_and_archive
+
+        # Create FIP for BL2, BL31, and BL33
+        build_fip BL31="$bl31" BL2="$bl2" BL33="$archive/uefi.bin"
+}
