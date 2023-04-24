@@ -150,6 +150,9 @@ clean_build $fvp_common_flags EL3_EXCEPTION_HANDLING=1 \
     FAULT_INJECTION_SUPPORT=1 HANDLE_EA_EL3_FIRST_NS=1 RAS_EXTENSION=1 \
     SDEI_SUPPORT=1
 
+# EA handled in EL3 first
+clean_build $fvp_common_flags HANDLE_EA_EL3_FIRST_NS=1 PLATFORM_TEST_EA_FFH=1
+
 # Hardware Assisted Coherency(DynamIQ)
 clean_build $fvp_common_flags FVP_CLUSTER_COUNT=1 FVP_MAX_CPUS_PER_CLUSTER=8 \
     HW_ASSISTED_COHERENCY=1 USE_COHERENT_MEM=0
