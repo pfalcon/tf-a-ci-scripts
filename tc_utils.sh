@@ -9,8 +9,15 @@ source "$ci_root/fvp_utils.sh"
 
 tc_prebuilts="${tc_prebuilts:-$tfa_downloads/total_compute}"
 
-# Pre-built SCP binaries
-scp_prebuilts="${scp_prebuilts:-$scp_mcp_downloads}"
+case "${plat_variant}" in
+    0)
+        scp_prebuilts="${scp_prebuilts:-$scp_mcp_2_11_0_downloads}"
+        ;;
+
+    *)
+        scp_prebuilts="${scp_prebuilts:-$scp_mcp_downloads}"
+        ;;
+esac
 
 fvp_kernels[fvp-tc-kernel]="$tc_prebuilts/Image"
 fvp_initrd_urls[fvp-tc-ramdisk]="$tc_prebuilts/uInitrd-busybox.0x88000000"
