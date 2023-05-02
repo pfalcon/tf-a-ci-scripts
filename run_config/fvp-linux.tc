@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -42,7 +42,7 @@ EOF
 	saveas="$tmpdir" url="$tc_prebuilts/tc$plat_variant/wrapper_scripts" fetch_directory
 
 	echo "Installing dependencies..."
-	pip3 install cryptography cbor2 intelhex
+	pip3 install cryptography cbor2 intelhex pyyaml
 
 	pushd $tmpdir/mcuboot/scripts
 	python3 $tmpdir/wrapper_scripts/wrapper/wrapper.py \
