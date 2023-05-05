@@ -11,4 +11,15 @@ source [file join [file dirname [info script]] handle-arguments.inc]
 # Trusted Firmware boot section
 source [file join [file dirname [info script]] trusted-firmware.inc]
 
-expect_string "Passed nv_counter_test"
+expect_string "Starting platform tests..."
+
+expect {
+	"Platform tests failed." {
+		exit_uart -1
+	}
+	"Platform tests succeeded." {
+		exit_uart 0
+	}
+}
+
+exit_uart -1
