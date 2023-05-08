@@ -1,0 +1,36 @@
+device_type: stm32mp15x-eval
+job_name: stm32mp15x-eval $job_name test - $build_mode
+timeouts:
+  job:
+    minutes: 35
+  action:
+    minutes: 15
+  connection:
+    minutes: 5
+priority: medium
+visibility: public
+actions:
+- deploy:
+    timeout:
+      minutes: 30
+    to: flasher
+    images:
+      tarball:
+        url: https://images.validation.linaro.org/people.linaro.org/~theodore.grey/NEWSTM/stm32mp1_ev1_tarball.tar.gz
+      layout:
+        url: $flash_layout_url
+      rep_bin:
+        url: $rep_bin_url
+    os: oe
+- boot:
+    timeout:
+        minutes: 6
+    method: minimal
+- test:
+    timeout:
+      minutes: 10
+    interactive:
+    - name: int_1
+      prompts: ["Hit any key to stop autoboot"]
+      script:
+      - command:

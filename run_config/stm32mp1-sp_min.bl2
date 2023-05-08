@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2023 Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+post_tf_archive() {
+    payload_type="sp_min_bl2" gen_sp_min_bl2_sd_layout
+}
+
+generate_lava_job() {
+    payload_type="sp_min_bl2" gen_stm32mp1_yaml
+}
+
