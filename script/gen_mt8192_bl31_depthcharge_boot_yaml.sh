@@ -5,7 +5,7 @@
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
-# Generate a YAML file in order to dispatch Juno TFTF runs on LAVA. Note that
+# Generate a YAML file in order to dispatch Asurada Chromebook runs on LAVA. Note that
 # this script would produce a meaningful output when run via. Jenkins.
 #
 # $bin_mode must be set. This script outputs to STDOUT
