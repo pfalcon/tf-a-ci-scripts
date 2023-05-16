@@ -30,6 +30,8 @@ projects = {
 	"cc_plugin": gerrit.GerritProject("tests/lava/test-definitions.git", gerrit_arm),
         "scp": gerrit.GerritProject("scp/firmware", gerrit_arm),
         "spm": gerrit.GerritProject("trusted-firmware/spm", gerrit_arm),
+        "tf-m-tests": gerrit.GerritProject("iot-sw/tf-m/internal/tf-m-tests", gerrit_arm),
+        "tf-m-extras": gerrit.GerritProject("iot-sw/tf-m/internal/tf-m-extras", gerrit_arm),
     },
 
     # Projects hosted on trustedfirmware.org Gerrit server.
@@ -38,6 +40,8 @@ projects = {
         "trusted-firmware-tf": gerrit.GerritProject("TF-A/tf-a-tests", gerrit_tforg),
         "trusted-firmware-ci": gerrit.GerritProject("ci/tf-a-ci-scripts", gerrit_tforg),
         "spm": gerrit.GerritProject("hafnium/hafnium", gerrit_tforg),
+        "tf-m-tests": gerrit.GerritProject("TF-M/tf-m-tests", gerrit_tforg),
+        "tf-m-extras": gerrit.GerritProject("TF-M/tf-m-extras", gerrit_tforg),
     },
 }
 

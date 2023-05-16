@@ -467,6 +467,18 @@ if not_upon "$no_ci"; then
 		clone_and_sync
 fi
 
+TF_M_TESTS_REFSPEC="${tf_m_tests_refspec:-$TF_M_TESTS_REFSPEC}"
+if not_upon "$no_tfm_tests"; then
+	url="$tf_m_tests_src_repo_url" name="tf-m-tests" ref="TF_M_TESTS_REFSPEC" \
+		loc="TF_M_TESTS_PATH" clone_and_sync
+fi
+
+TF_M_EXTRAS_REFSPEC="${tf_m_extras_refspec:-$TF_M_EXTRAS_REFSPEC}"
+if not_upon "$no_tfm_extras"; then
+	url="$tf_m_extras_src_repo_url" name="tf-m-extras" ref="TF_M_EXTRAS_REFSPEC" \
+		loc="TF_M_EXTRAS_PATH" clone_and_sync
+fi
+
 if [ "$GERRIT_BRANCH" ]; then
 	# If this CI run was in response to a Gerrit commit, post a comment back
 	# to the patch set calling out everything that we've done so far. This

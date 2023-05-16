@@ -503,7 +503,14 @@ build_tf() {
 
 		emit_env "MBEDTLS_DIR" "$mbedtls_dir"
 	fi
-
+	if [ "$(get_tf_opt PLATFORM_TEST)" = "tfm-testsuite" ] &&
+	   not_upon "${TF_M_TESTS_PATH}"; then
+		emit_env "TF_M_TESTS_PATH" "$WORKSPACE/tf-m-tests"
+	fi
+	if [ "$(get_tf_opt PLATFORM_TEST)" = "tfm-testsuite" ] &&
+	   not_upon "${TF_M_EXTRAS_PATH}"; then
+		emit_env "TF_M_EXTRAS_PATH" "$WORKSPACE/tf-m-extras"
+	fi
 	if [ -f "$env_file" ]; then
 		set -a
 		source "$env_file"
