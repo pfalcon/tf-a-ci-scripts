@@ -141,7 +141,7 @@ fetch_file() {
 		sa="${saveas+-o $saveas}"
 		echo "Fetch: $url -> $saveas"
 		# Use curl to support file protocol
-		curl --fail --connect-timeout 10 --retry 6 -sLS $sa "$url"
+		curl --fail --no-progress-meter --connect-timeout 10 --retry 6 -LS $sa "$url"
 	else
 		sa="${saveas-.}"
 		echo "Fetch: $url -> $sa"
