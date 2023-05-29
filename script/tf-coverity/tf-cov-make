@@ -488,6 +488,7 @@ clean_build PLAT=ls1088aqds $(common_flags) all BOOT_MODE=nor $nxp_sb_fuse_flags
 # Platforms from Intel
 make PLAT=stratix10 $(common_flags) all
 make PLAT=agilex $(common_flags) all
+make PLAT=agilex5 $(common_flags) all
 make PLAT=n5x $(common_flags) all
 
 # Platforms from Broadcom
