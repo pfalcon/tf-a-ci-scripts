@@ -61,7 +61,6 @@ fvp_morello="fvp:fvp_morello_0.11_33;/opt/model/FVP_Morello/models/Linux64_GCC-6
 fvp_rd_e1_edge="fvp:fvp_rd_e1_edge_11.17_29;/opt/model/FVP_RD_E1_edge/models/${model_flavour}"
 fvp_rd_n1_edge="fvp:fvp_rd_n1_edge_11.17_29;/opt/model/FVP_RD_N1_edge/models/${model_flavour}"
 fvp_rd_v1="fvp:fvp_rd_v1_11.17_29;/opt/model/FVP_RD_V1/models/${model_flavour}"
-fvp_tc0="fvp:fvp_tc0_11.17_18;/opt/model/FVP_TC0/models/${model_flavour}"
 fvp_tc1="fvp:fvp_tc1_11.17_33;/opt/model/FVP_TC1/models/${model_flavour}"
 fvp_tc2="fvp:fvp_tc2_11.20_24;/opt/model/FVP_TC2/models/${model_flavour}"
 
@@ -114,7 +113,6 @@ fvp_models=(
 [css-rde1edge]="${fvp_rd_e1_edge};FVP_RD_E1_edge"
 [css-rdn1edgex2]="${fvp_rd_n1_edge};FVP_RD_N1_edge_dual"
 [css-rdv1]="${fvp_rd_v1};FVP_RD_V1"
-[tc0]="${fvp_tc0};FVP_TC0"
 [tc1]="${fvp_tc1};FVP_TC1"
 [tc2]="${fvp_tc2};FVP_TC2"
 )
