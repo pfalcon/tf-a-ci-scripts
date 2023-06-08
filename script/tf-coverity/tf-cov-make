@@ -191,8 +191,8 @@ clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} TPM_HASH_ALG=sha256 DRTM_SUPPOR
 # CoT descriptors in device tree
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} COT_DESC_IN_DTB=1 USE_ROMLIB=1
 
-# PSA FWU support
-clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_GPT_SUPPORT=1 PSA_FWU_SUPPORT=1 USE_ROMLIB=1
+# PSA FWU support - Disable debug build for this option as its causing bl31 image overflow
+clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_GPT_SUPPORT=1 PSA_FWU_SUPPORT=1 USE_ROMLIB=1 DEBUG=0
 
 # SME and HCX features
 clean_build $fvp_common_flags ENABLE_SME_FOR_NS=1 ENABLE_FEAT_HCX=1
