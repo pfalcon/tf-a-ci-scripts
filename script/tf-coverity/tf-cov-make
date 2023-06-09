@@ -710,4 +710,7 @@ clean_build PLAT=axg $(common_flags) AML_USE_ATOS=1
 # QTI MSM8916 platform
 clean_build PLAT=msm8916 $(common_flags)
 
+# Platforms from Aspeed
+clean_build PLAT=ast2700 $(common_flags) SPD=opteed
+
 cd ..
