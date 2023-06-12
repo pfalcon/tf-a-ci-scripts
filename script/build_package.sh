@@ -484,7 +484,7 @@ build_tf() {
 	config_file="${tf_build_config:-$tf_config_file}"
 
 	# Build fiptool and all targets by default
-	build_targets="${tf_build_targets:-memmap fiptool all}"
+	build_targets="${tf_build_targets:-fiptool all}"
 
 	source "$config_file"
 
@@ -543,6 +543,8 @@ EOF
 	$tf_build_wrapper poetry run make $make_j_opts $(cat "$config_file") \
 		DEBUG="$DEBUG" V=1 SPIN_ON_BL1_EXIT="$connect_debugger" \
 		$build_targets 3>&1 &>>"$build_log" || fail_build
+
+        poetry run memory -sr "$tf_build_path" 2>&1 | tee -a "$build_log"
 	)
 }
 
