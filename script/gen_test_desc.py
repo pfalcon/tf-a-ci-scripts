@@ -100,6 +100,8 @@ def process_item(item):
     elif os.path.isdir(item_loc):
         # If it's a directory, select all files inside it
         for a_file in next(os.walk(item_loc))[2]:
+            if a_file.endswith(".inactive"):
+                continue
             gen_desc(item, a_file)
     else:
         # The item doesn't exist
