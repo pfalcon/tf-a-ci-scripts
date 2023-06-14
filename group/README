@@ -1,10 +1,24 @@
 #
-# Copyright (c) 2019-2020 Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
 
+Subdirectories in this directory map test groups to a set of individual
+build/run configs and the parameters. Format is:
+
+
++-test_config1
+| +-build_config1:run_config1
+| |  \- (contents are additional options, if any)
+| \-build_config1:run_config1
+|    \- (contents are additional options, if any)
++-test_config2
+| ...
+
+
 Files in this directory map build configs to their run configs. BUILD_CONFIG and
 RUN_CONFIG environment variables are set accordingly.
 
-These files are in the Java property file format; so, no quoting the RHS.
+Options inside build/run config files are in the Java property file format: VAR=value;
+so, no quoting the RHS.
