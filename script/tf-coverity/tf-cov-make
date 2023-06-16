@@ -655,6 +655,9 @@ clean_build PLAT=qemu $(common_flags) ${TBB_OPTIONS}
 # Use GICV3 driver
 clean_build PLAT=qemu $(common_flags) QEMU_USE_GIC_DRIVER=QEMU_GICV3 \
     ENABLE_STACK_PROTECTOR=strong
+# Use GICV3 driver with SDEI support
+clean_build PLAT=qemu $(common_flags) QEMU_USE_GIC_DRIVER=QEMU_GICV3 \
+    ENABLE_STACK_PROTECTOR=strong SDEI_SUPPORT=1 EL3_EXCEPTION_HANDLING=1
 # Use encrypted FIP feature.
 clean_build PLAT=qemu $(common_flags) ${TBB_OPTIONS} \
     BL32_RAM_LOCATION=tdram DECRYPTION_SUPPORT=aes_gcm ENCRYPT_BL31=1 \
