@@ -22,3 +22,8 @@ RUN_CONFIG environment variables are set accordingly.
 
 Options inside build/run config files are in the Java property file format: VAR=value;
 so, no quoting the RHS.
+
+If a build/run config file has ".inactive" suffix, corresponding config will
+be skipped (not even built). This can be used as an alternative to complete
+deletion of the file if the config has known issues with compilation or testing,
+to avoid failing entire CI jobs while those issues are addressed.
