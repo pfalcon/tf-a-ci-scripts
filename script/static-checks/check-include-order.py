@@ -60,7 +60,7 @@ def dir_include_paths(directory):
     dir_includes = set()
     for (root, _dirs, files) in os.walk(directory):
         for fname in files:
-            if fname.endswith(".h"):
+            if fname.endswith(".h") or fname.endswith(".S"):
                 names = os.path.join(root, fname).split(os.sep)
                 for i in range(len(names)):
                     suffix_path = "/".join(names[i:])
