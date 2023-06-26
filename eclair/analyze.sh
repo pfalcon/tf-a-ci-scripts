@@ -83,6 +83,3 @@ ${ECLAIR_BIN_DIR}/eclair_report -db=${PROJECT_ECD} -reports_jenkins=${JENKINS_XM
 
 # Compress database to take less disk space in Jenkins archive
 xz ${PROJECT_ECD}
-
-
-. ${SCRIPT_DIR}/analyze_index_html.sh
