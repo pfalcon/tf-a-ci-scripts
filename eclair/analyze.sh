@@ -76,10 +76,5 @@ mv ${ECLAIR_OUTPUT_DIR}/../summary_txt/by_service.txt ${ECLAIR_OUTPUT_DIR}/../fu
 rm -rf ${ECLAIR_OUTPUT_DIR}/../summary_txt
 make_self_contained ${ECLAIR_OUTPUT_DIR}/../full_html
 
-# Create the Jenkins reports file.
-JENKINS_XML="${ECLAIR_OUTPUT_DIR}/../jenkins.xml"
-${ECLAIR_BIN_DIR}/eclair_report -db=${PROJECT_ECD} -reports_jenkins=${JENKINS_XML}
-
-
 # Compress database to take less disk space in Jenkins archive
 xz ${PROJECT_ECD}
