@@ -171,6 +171,25 @@ elif [ "$PROJECT" = "TF-A" ]; then
                   }
               ]
 EOM
+elif [ "$PROJECT" = "HAFNIUM" ]; then
+      read -r -d '' scm_sources << EOM
+              [
+                  {
+                  "type": "git",
+                  "URL":  "$CC_TRUSTED_FIRMWARE_URL",
+                  "COMMIT": "$CC_TRUSTED_FIRMWARE_COMMIT",
+                  "REFSPEC": "$CC_TRUSTED_FIRMWARE_REFSPEC",
+                  "LOCATION": "trusted_firmware"
+                  },
+                  {
+                  "type": "git",
+                  "URL":  "$CC_SPM_URL",
+                  "COMMIT": "$CC_SPM_COMMIT",
+                  "REFSPEC": "$CC_SPM_REFSPEC",
+                  "LOCATION": "spm"
+                  }
+              ]
+EOM
   else
       echo "SCM sources not provided for project '${PROJECT}'"
       exit 1

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -35,6 +35,9 @@ if [ $COVERAGE_ON -eq 1 ]; then
 		READELF="$(which 'arm-none-eabi-readelf')"
 		FALLBACK_PLUGIN_URL="http://files.oss.arm.com/downloads/tf-a/coverage-plugin"
 		FALLBACK_FILES="CoverageTrace.so,CoverageTrace.o,PluginUtils.o"
+	elif [[ "$TEST_GROUP" == spm* ]];then
+			PROJECT="HAFNIUM"
+			LIST_OF_BINARIES="secure_hafnium.elf hafnium.elf"
 	elif [[ "$TEST_GROUP" == tf* ]];then
 		PROJECT="TF-A"
 		LIST_OF_BINARIES="bl1.elf bl2.elf bl31.elf"

@@ -196,6 +196,9 @@ case "$TEST_GROUPS" in
     tf*)
             project="trusted_firmware"
             jenkins_archive_folder=merge/outdir;;
+    spm*)
+            project="hafnium"
+            jenkins_archive_folder=merge/outdir;;
     *)
             exit 0;;
 esac
