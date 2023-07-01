@@ -55,7 +55,8 @@ clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram SPD=t
     TSP_NS_INTR_ASYNC_PREEMPT=1
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=opteed FVP_TRUSTED_SRAM_SIZE=384
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=tlkd
-clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=pncd SPD_PNCD_NS_IRQ=126 SPD_PNCD_S_IRQ=15
+clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=pncd SPD_PNCD_NS_IRQ=126 \
+    SPD_PNCD_S_IRQ=15 FVP_TRUSTED_SRAM_SIZE=384
 
 # Dualroot chain of trust.
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=tspd COT=dualroot
@@ -301,7 +302,6 @@ make PLAT=arm_fpga $(common_flags release) \
 #
 # Total Compute platforms
 #
-make $(common_flags) PLAT=tc TARGET_PLATFORM=0 ${ARM_TBB_OPTIONS} all
 make $(common_flags) PLAT=tc TARGET_PLATFORM=1 ${ARM_TBB_OPTIONS} all
 make $(common_flags) PLAT=tc TARGET_PLATFORM=2 ${ARM_TBB_OPTIONS} MEASURED_BOOT=1 all
 
