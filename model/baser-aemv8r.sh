@@ -10,7 +10,11 @@ if  is_arm_jenkins_env || upon "$local_ci"; then
 	set_model_path "$warehouse/SysGen/Models/$model_version/$model_build/external/models/$model_flavour/FVP_BaseR_AEMv8R"
 else
 	# OpenCI support will be added in a future patch
-	set_model_path ""
+	source "$ci_root/fvp_utils.sh"
+	# fvp_models variable contains the information for FVP paths, where 2nd field
+	# points to the /opt/model/*/models/${model_flavour}
+	models_dir="$(echo ${fvp_models[$model]} | awk -F ';' '{print $2}')"
+	set_model_path "$models_dir"
 fi
 
 # Write model command line options

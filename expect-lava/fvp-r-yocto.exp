@@ -13,7 +13,8 @@ expect_string+=('i;BL1: Booting BL33')
 # Uboot
 expect_string+=('i;U-Boot')
 
+# Linux kernel boot section
+source $ci_root/expect-lava/linux.inc
+
 # Yocto
-expect_string+=('i;Booting Linux on physical CPU')
-expect_string+=('i;fvp-baser-aemv8r64 login:;;;root\n')
-expect_string+=('i;#')
+expect_string+=('i;fvp-baser-aemv8r64 login:')

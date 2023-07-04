@@ -115,6 +115,7 @@ fvp_models=(
 [css-rdv1]="${fvp_rd_v1};FVP_RD_V1"
 [tc1]="${fvp_tc1};FVP_TC1"
 [tc2]="${fvp_tc2};FVP_TC2"
+[baser-aemv8r]="${fvp_base_aemv8r};FVP_BaseR_AEMv8R"
 )
 
 

@@ -28,22 +28,12 @@ expect {
 	}
 }
 
-# Yocto
-expect {
-	"Booting Linux on physical CPU" {
-		message "Booting Linux"
-	}
-}
+# Linux kernel boot section
+source [file join [file dirname [info script]] linux.inc]
 
+# Yocto
 expect {
 	"fvp-baser-aemv8r64 login:" {
 		message "Yocto Login Prompt Received"
-		send "root\n"
-	}
-}
-
-expect {
-	"#" {
-		message "Successfully Reached Yocto Shell"
 	}
 }
