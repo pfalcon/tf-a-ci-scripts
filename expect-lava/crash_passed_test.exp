@@ -6,4 +6,4 @@
 # Expect script for AP/RSS non-volatile counter platform test
 #
 
-expect_string+=('i;Passed nv_counter_test')
+expect_string+=('i;Platform tests succeeded.;;Platform tests failed.')
