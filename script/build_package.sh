@@ -1275,6 +1275,11 @@ if upon "$local_ci"; then
 	fi
 fi
 
+# Install python build dependencies
+if is_arm_jenkins_env; then
+	source "$ci_root/script/install_python_deps.sh"
+fi
+
 modes="${bin_mode:-debug release}"
 for mode in $modes; do
 	echo "===== Building package in mode: $mode ====="
@@ -1448,11 +1453,6 @@ for mode in $modes; do
 
 		if [ -f "$plat_utils" ]; then
 			source "$plat_utils"
-		fi
-
-		# Install python build dependencies
-		if is_arm_jenkins_env; then
-			source "$ci_root/script/install_python_deps_tf.sh"
 		fi
 
 		poetry -C "$tf_root" install --without doc
