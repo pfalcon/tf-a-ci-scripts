@@ -24,7 +24,7 @@ actions:
     to: flasher
     images:
       recovery_image:
-        url: http://files.oss.arm.com/downloads/lava/health-checks/n1sdp/4/n1sdp-board-firmware-force-netboot.zip
+        url: "$tfa_downloads/n1sdp/n1sdp-board-firmware-force-netboot.zip"
         compression: zip
 
 - deploy:
@@ -32,12 +32,12 @@ actions:
     to: tftp
     os: debian
     kernel:
-      url: http://files.oss.arm.com/downloads/lava/health-checks/n1sdp/4/debian/linux
+      url: "$tfa_downloads/n1sdp/boot/linux"
       type: image
     ramdisk:
-      url: http://files.oss.arm.com/downloads/lava/health-checks/n1sdp/4/debian/ramdisk.img
+      url: "$tfa_downloads/n1sdp/boot/ramdisk.img"
     nfsrootfs:
-      url: http://files.oss.arm.com/downloads/lava/health-checks/n1sdp/4/debian/debian-buster-arm64-rootfs.tar.xz
+      url: "$tfa_downloads/n1sdp/boot/debian-buster-arm64-rootfs.tar.xz"
       compression: xz
 
 - boot:

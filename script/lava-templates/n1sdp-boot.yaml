@@ -1,0 +1,51 @@
+device_type: n1sdp
+job_name: tf-n1sdp TF-A boot test
+timeouts:
+  job:
+    minutes: 15
+  action:
+    minutes: 10
+  connection:
+    minutes: 5
+
+priority: ${LAVA_PRIORITY:-medium}
+visibility: public
+actions:
+#
+# Any firmware bundle deployed must be configured to boot automatically without
+# intervention. This means "PMIC_FORCE" must be set "TRUE" in the config file
+# to be deployed.
+#
+
+#
+# Deploy the primary board firmware bundle
+#
+- deploy:
+    namespace: recovery
+    to: flasher
+    images:
+      recovery_image:
+        url: $recovery_img_url
+        compression: zip
+
+- boot:
+    namespace: recovery
+    timeout:
+        minutes: 2
+    method: minimal
+
+- boot:
+    namespace: uart_one
+    method: new_connection
+    connection: uart1
+
+- test:
+    namespace: uart_one
+    connection-namespace: uart_one
+    timeout:
+      minutes: 5
+    interactive:
+    - name: int_1
+      prompts: ["Press ESCAPE for boot options"]
+      script:
+      - command:

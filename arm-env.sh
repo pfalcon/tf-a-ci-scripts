@@ -12,6 +12,7 @@
 nfs_volume="/arm"
 jenkins_url="http://jenkins.oss.arm.com"
 tfa_downloads="http://files.oss.arm.com/downloads/tf-a"
+ci_env="armci"
 
 # Source repositories.
 arm_gerrit_url="gerrit.oss.arm.com"

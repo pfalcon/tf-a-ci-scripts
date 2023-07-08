@@ -12,3 +12,4 @@
 nfs_volume="${WORKSPACE:?}/nfs"
 jenkins_url="http://ci.staging.trustedfirmware.org"
 tfa_downloads="https://downloads.trustedfirmware.org/tf-a"
+ci_env="openci_staging"

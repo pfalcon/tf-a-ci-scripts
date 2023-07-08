@@ -6,6 +6,12 @@
 #
 
 generate_lava_job(){
-        target="n1sdp" payload_type="linux" gen_yaml_template
+        if [ "${ci_env}" = "armci" ]; then
+            payload_type="linux"
+        else
+            # Run simple boot test on OpenCi
+            payload_type="boot"
+        fi
+        target="n1sdp" payload_type="${payload_type}" gen_yaml_template
         gen_n1sdp_yaml
 }
