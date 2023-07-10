@@ -1,0 +1,5 @@
+ARM_TSP_RAM_LOCATION=dram
+CROSS_COMPILE=aarch64-none-elf-
+PLAT=fvp
+SPD=tspd
+USE_COHERENT_MEM=0

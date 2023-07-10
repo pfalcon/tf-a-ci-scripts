@@ -1,0 +1,4 @@
+COT=dualroot
+CROSS_COMPILE=aarch64-none-elf-
+PLAT=fvp
+SPD=tspd
