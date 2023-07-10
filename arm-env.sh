@@ -10,7 +10,7 @@
 #
 
 nfs_volume="/arm"
-jenkins_url="http://jenkins.oss.arm.com"
+jenkins_url="https://jenkins.oss.arm.com"
 tfa_downloads="http://files.oss.arm.com/downloads/tf-a"
 ci_env="armci"
 
@@ -19,10 +19,10 @@ arm_gerrit_url="gerrit.oss.arm.com"
 tf_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/pdcs-platforms/ap/tf-topics.git"
 tftf_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/trusted-firmware/tf-a-tests.git"
 ci_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/pdswinf/ci/pdcs-platforms/platform-ci.git"
-scp_src_repo_default="${scp_src_repo_default:-http://$arm_gerrit_url/scp/firmware}"
+scp_src_repo_default="${scp_src_repo_default:-https://$arm_gerrit_url/scp/firmware}"
 cc_src_repo_url="${cc_src_repo_url:-https://$arm_gerrit_url/tests/lava/test-definitions.git}"
 cc_src_repo_tag="${cc_src_repo_tag:-kernel-team-workflow_2019-09-20}"
-scp_tools_src_repo_url="${scp_tools_src_repo_url:-http://$arm_gerrit_url/scp/tools-non-public}"
+scp_tools_src_repo_url="${scp_tools_src_repo_url:-https://$arm_gerrit_url/scp/tools-non-public}"
 tf_for_scp_tools_src_repo_url="https://$arm_gerrit_url/scp/test-framework"
 
 # Arm Coverity server.
