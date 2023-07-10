@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2020-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2020-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -23,7 +23,7 @@ scp_src_repo_default="${scp_src_repo_default:-http://$arm_gerrit_url/scp/firmwar
 cc_src_repo_url="${cc_src_repo_url:-https://$arm_gerrit_url/tests/lava/test-definitions.git}"
 cc_src_repo_tag="${cc_src_repo_tag:-kernel-team-workflow_2019-09-20}"
 scp_tools_src_repo_url="${scp_tools_src_repo_url:-http://$arm_gerrit_url/scp/tools-non-public}"
-tf_for_scp_tools_src_repo_url="https://gerrit.oss.arm.com/scp/test-framework"
+tf_for_scp_tools_src_repo_url="https://$arm_gerrit_url/scp/test-framework"
 
 # Arm Coverity server.
 export coverity_host="${coverity_host:-coverity.cambridge.arm.com}"
