@@ -142,6 +142,10 @@ clean_build $fvp_common_flags CTX_INCLUDE_PAUTH_REGS=1 CTX_INCLUDE_EL2_REGS=0 EL
 clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=1 ARM_ARCH_MINOR=4 \
 	CTX_INCLUDE_EL2_REGS=1 SP_LAYOUT_FILE=dummy
 
+# SPM support with logical partitions in the SPMD.
+clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=1 ARM_ARCH_MINOR=4 \
+	CTX_INCLUDE_EL2_REGS=1 SP_LAYOUT_FILE=dummy ENABLE_SPMD_LP=1
+
 # SPM support with SPM sitting at EL3
 clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=0 SPMC_AT_EL3=1
 
