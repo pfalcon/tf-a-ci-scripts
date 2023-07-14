@@ -302,8 +302,10 @@ make PLAT=arm_fpga $(common_flags release) \
 #
 # Total Compute platforms
 #
-make $(common_flags) PLAT=tc TARGET_PLATFORM=1 ${ARM_TBB_OPTIONS} all
-make $(common_flags) PLAT=tc TARGET_PLATFORM=2 ${ARM_TBB_OPTIONS} MEASURED_BOOT=1 all
+clean_build $(common_flags) PLAT=tc TARGET_PLATFORM=1 ${ARM_TBB_OPTIONS}
+clean_build $(common_flags) PLAT=tc TARGET_PLATFORM=2 ${ARM_TBB_OPTIONS} MEASURED_BOOT=1
+clean_build $(common_flags) PLAT=tc TARGET_PLATFORM=2 ${ARM_TBB_OPTIONS} PLATFORM_TEST=rss-rotpk
+clean_build $(common_flags) PLAT=tc TARGET_PLATFORM=2 ${ARM_TBB_OPTIONS} PLATFORM_TEST=rss-nv-counters
 
 #
 # Morello platform
