@@ -551,7 +551,9 @@ EOF
 		DEBUG="$DEBUG" V=1 SPIN_ON_BL1_EXIT="$connect_debugger" \
 		$build_targets 3>&1 &>>"$build_log" || fail_build
 
-        poetry run memory -sr "$tf_build_path" 2>&1 | tee -a "$build_log"
+        if [ "$build_targets" != "doc" ]; then
+                poetry run memory -sr "$tf_build_path" 2>&1 | tee -a "$build_log"
+        fi
 	)
 }
 
