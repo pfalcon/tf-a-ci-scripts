@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -12,14 +12,14 @@ generate_lava_job() {
 
 	model="$model" \
 		arch_version="8.3" \
-		bmcov_plugin_path="${coverage_trace_plugin}" \
-		bmcov_plugin="1" \
 		cluster_0_has_el2="0" \
 		cluster_0_num_cores="2" \
 		cluster_0_reg_reset="0xffffffff" \
 		cluster_1_has_el2="0" \
 		cluster_1_num_cores="3" \
 		cluster_1_reg_reset="0xffffffff" \
+		bmcov_plugin="1" \
+		bmcov_plugin_path="${coverage_trace_plugin}" \
 		gen_model_params
 
 	model="$model" gen_fvp_yaml

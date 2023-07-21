@@ -8,10 +8,8 @@
 generate_lava_job() {
 	local model="base-aemv8a"
 
-	model="$model" \
-	bmcov_plugin_path="${coverage_trace_plugin}" \
-	bmcov_plugin="1" \
-	arch_version="8.4" fault_inject="1"
-	gen_model_params
+	model="$model" arch_version="8.4" fault_inject="1" bmcov_plugin="1" \
+		bmcov_plugin_path="${coverage_trace_plugin}" \
+		gen_model_params
 	model="$model" gen_fvp_yaml
 }

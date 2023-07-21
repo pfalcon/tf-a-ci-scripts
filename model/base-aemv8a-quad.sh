@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2022 Arm Limited. All rights reserved.
+# Copyright (c) 2023 Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -25,6 +25,8 @@ cat <<EOF >>"$model_param_file"
 -C bp.terminal_1.start_port=5001
 -C bp.terminal_2.start_port=5002
 -C bp.terminal_3.start_port=5003
+
+${bmcov_plugin+--plugin=$bmcov_plugin_path}
 
 ${cluster_0_num_cores+-C cluster0.NUM_CORES=$cluster_0_num_cores}
 ${cluster_1_num_cores+-C cluster1.NUM_CORES=$cluster_1_num_cores}
