@@ -556,7 +556,7 @@ model_build_11_17="21"
 model_flavour_11_17="Linux64_GCC-9.3"
 
 # Model revisions
-model_version="${model_version:-11.19}"
+model_version="${model_version:-11.22}"
 model_build="${model_build:-14}"
 model_flavour="${model_flavour:-Linux64_GCC-9.3}"
 
