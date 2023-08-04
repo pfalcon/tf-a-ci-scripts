@@ -1464,6 +1464,9 @@ for mode in $modes; do
 			source "$plat_utils"
 		fi
 
+		fvp_tsram_size="$(get_tf_opt FVP_TRUSTED_SRAM_SIZE)"
+		fvp_tsram_size="${fvp_tsram_size:-256}"
+
 		poetry -C "$tf_root" install --without doc
 
 		archive="$build_archive"
