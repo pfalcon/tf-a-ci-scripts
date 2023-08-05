@@ -13,7 +13,7 @@ prompt='Running at NS-EL(1|2)'
 expect_string+=("i;${prompt}")
 
 prompt='Tests Failed  : 0'
-failures='Unhandled exception on '
+failures='Unhandled exception on |Tests Failed  : [^0]'
 expect_string+=("i;${prompt};;${failures}")
 
 prompt='Exiting tests.'
