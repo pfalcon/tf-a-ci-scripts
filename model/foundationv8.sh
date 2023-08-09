@@ -25,4 +25,5 @@ ${rootfs_bin+--block-device=$rootfs_bin}
 --quantum=$quantum
 ${arch_version+--arm-v$arch_version}
 ${bmcov_plugin+--plugin=$bmcov_plugin_path}
+${wait_debugger+--cadi-server}
 EOF
