@@ -53,7 +53,7 @@ fvp_common_flags="$(common_flags) PLAT=fvp"
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram \
     SPD=tspd FVP_TRUSTED_SRAM_SIZE=384
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram SPD=tspd TSP_INIT_ASYNC=1 \
-    TSP_NS_INTR_ASYNC_PREEMPT=1
+    TSP_NS_INTR_ASYNC_PREEMPT=1 FVP_TRUSTED_SRAM_SIZE=384
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=opteed FVP_TRUSTED_SRAM_SIZE=384
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=tlkd FVP_TRUSTED_SRAM_SIZE=384
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=pncd SPD_PNCD_NS_IRQ=126 \
