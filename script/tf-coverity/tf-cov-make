@@ -702,6 +702,8 @@ clean_build PLAT=qemu $(common_flags) BL32=Makefile \
     SPD=spmd CTX_INCLUDE_EL2_REGS=0 SPMD_SPM_AT_SEL2=0 SPMC_OPTEE=1
 # Measured Boot
 clean_build PLAT=qemu $(common_flags) ${TBB_OPTIONS} MBOOT_EL_HASH_ALG=sha256 MEASURED_BOOT=1
+# Transfer List
+clean_build PLAT=qemu $(common_flags) TRANSFER_LIST=1
 
 clean_build PLAT=qemu_sbsa $(common_flags)
 
