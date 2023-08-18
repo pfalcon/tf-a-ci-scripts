@@ -179,7 +179,7 @@ clone_and_sync() {
 		# clone so that downstream jobs can clone from this one using
 		# the same refspec.
 		if echo "$refspec" | grep -qv '^[a-f0-9]\+$'; then
-			git branch "$refspec" FETCH_HEAD
+			git branch -f "$refspec" FETCH_HEAD
 		fi
 	elif [ "$name" = "$repo_under_test" ]; then
 		# Main repository under test
