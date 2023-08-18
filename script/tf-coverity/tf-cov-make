@@ -69,7 +69,11 @@ clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} SPD=tspd COT=dualroot
 # Coverity. In reality, RSS is not supported on FVP right now (or on any other
 # upstream platform, for that matter) so the resulting firmware would not be
 # functional.
-clean_build $fvp_common_flags USE_ROMLIB=1 MEASURED_BOOT=1 \
+clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} USE_ROMLIB=1 \
+	    ENABLE_RME=1 MEASURED_BOOT=1 PLAT_RSS_NOT_SUPPORTED=0
+
+# FVP RSS supported build without CCA enabled.
+clean_build $fvp_common_flags USE_ROMLIB=1 MEASURED_BOOT=1 MBEDTLS_DIR=$(pwd)/mbedtls \
     PLAT_RSS_NOT_SUPPORTED=0
 
 clean_build $fvp_common_flags SPD=trusty
