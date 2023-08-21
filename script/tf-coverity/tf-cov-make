@@ -611,6 +611,11 @@ make ${stm32mp1_common_flags} STM32MP_SDMMC=1 \
     BUILD_PLAT=build/stm32mp1-sdmmc/debug \
     AARCH32_SP=sp_min bl2 bl32
 
+# STM32MP1 SDMMC boot BL2 without AARCH32_SP
+make ${stm32mp1_common_flags} STM32MP_SDMMC=1 \
+    BUILD_PLAT=build/stm32mp1-sdmmc/debug \
+    bl2
+
 # STM32MP1 eMMC boot
 make ${stm32mp1_common_flags} STM32MP_EMMC=1 \
     BUILD_PLAT=build/stm32mp1-emmc/debug \
