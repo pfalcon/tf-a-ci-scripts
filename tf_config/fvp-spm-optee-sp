@@ -9,3 +9,5 @@ PLAT=fvp
 SPD=spmd
 SP_LAYOUT_FILE=${tf_root}/build/fvp/${bin_mode}/optee_sp_layout.json
 SPMD_SPM_AT_SEL2=1
+GIC_EXT_INTID=1
+PLAT_TEST_SPM=1

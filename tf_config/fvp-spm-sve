@@ -10,3 +10,5 @@ ENABLE_SVE_FOR_SWD=1
 SP_LAYOUT_FILE=${tftf_root}/build/fvp/${bin_mode}/sp_layout.json
 SPD=spmd
 SPMD_SPM_AT_SEL2=1
+GIC_EXT_INTID=1
+PLAT_TEST_SPM=1

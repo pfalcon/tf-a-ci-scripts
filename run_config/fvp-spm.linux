@@ -39,6 +39,10 @@ generate_lava_job() {
 		kernel_addr="0x88000000" \
 		kernel_bin="$archive/hafnium.bin" \
 		memory_tagging_support_level="2" \
+		gicd_are_fixed_one="1" \
+		gicv3_ext_interrupt_range="1" \
+		gicd_ext_ppi_count="64" \
+		gicd_ext_spi_count="1024" \
 		gen_model_params
 
 	model="$model" model_dtb="manifest.dtb" gen_fvp_yaml

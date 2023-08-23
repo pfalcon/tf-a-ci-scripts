@@ -11,3 +11,5 @@ SP_LAYOUT_FILE=${tftf_root}/build/fvp/${bin_mode}/sp_layout.json
 MEASURED_BOOT=1
 USE_ROMLIB=1
 FVP_TRUSTED_SRAM_SIZE=384
+GIC_EXT_INTID=1
+PLAT_TEST_SPM=1
