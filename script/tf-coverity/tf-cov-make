@@ -95,11 +95,12 @@ clean_build $fvp_common_flags SMC_PCI_SUPPORT=1
 clean_build $fvp_common_flags SEC_INT_DESC_IN_FCONF=1
 
 # Without coherent memory
-clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram SPD=tspd USE_COHERENT_MEM=0
+clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram SPD=tspd \
+    USE_COHERENT_MEM=0 FVP_TRUSTED_SRAM_SIZE=384
 
 # Using PSCI extended State ID format rather than the original format
-clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram SPD=tspd PSCI_EXTENDED_STATE_ID=1 \
-    ARM_RECOM_STATE_ID_ENC=1
+clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_TSP_RAM_LOCATION=dram SPD=tspd \
+    PSCI_EXTENDED_STATE_ID=1 ARM_RECOM_STATE_ID_ENC=1 FVP_TRUSTED_SRAM_SIZE=384
 
 # Alternative boot flows (This changes some of the platform initialisation code)
 clean_build $fvp_common_flags EL3_PAYLOAD_BASE=0x80000000
@@ -172,7 +173,8 @@ clean_build $fvp_common_flags FVP_CLUSTER_COUNT=1 FVP_MAX_CPUS_PER_CLUSTER=8 \
 
 # Pointer Authentication Support
 clean_build $fvp_common_flags CTX_INCLUDE_PAUTH_REGS=1 \
-    ARM_ARCH_MINOR=5 EL3_EXCEPTION_HANDLING=1 BRANCH_PROTECTION=1 SDEI_SUPPORT=1 SPD=tspd TSP_NS_INTR_ASYNC_PREEMPT=1
+    ARM_ARCH_MINOR=5 EL3_EXCEPTION_HANDLING=1 BRANCH_PROTECTION=1 SDEI_SUPPORT=1 SPD=tspd \
+    TSP_NS_INTR_ASYNC_PREEMPT= 1 FVP_TRUSTED_SRAM_SIZE=384
 
 # Undefined Behaviour Sanitizer
 # Building with UBSAN SANITIZE_UB=on increases the executable size.
