@@ -14,7 +14,9 @@ expect_string+=('i;BL1: Booting BL33')
 expect_string+=('i;U-Boot')
 
 # Linux kernel boot section
-source $ci_root/expect-lava/linux.inc
+# As FVP_R currently does not support secondary core boot, linux expect would fail.
+# Disable it temporarily
+#source $ci_root/expect-lava/linux.inc
 
 # Yocto
 expect_string+=('i;fvp-baser-aemv8r64 login:')
