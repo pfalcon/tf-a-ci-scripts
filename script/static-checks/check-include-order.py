@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 #
-# Copyright (c) 2019-2022, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -74,6 +74,11 @@ def inc_order_is_correct(inc_list, path, commit_hash=""):
 
     # If there are less than 2 includes there's no need to check.
     if len(inc_list) < 2:
+        return True
+
+    if utils.file_is_ignored(
+            path, VALID_FILE_EXTENSIONS, IGNORED_FILES, IGNORED_FOLDERS
+        ):
         return True
 
     if commit_hash != "":
