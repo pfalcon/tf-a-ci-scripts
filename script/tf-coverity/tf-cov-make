@@ -155,7 +155,7 @@ clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=1 ARM_ARCH_MINOR=4 \
 clean_build $fvp_common_flags SPD=spmd SPMD_SPM_AT_SEL2=0 SPMC_AT_EL3=1
 
 #BL2 at EL3 support
-clean_build $fvp_common_flags RESET_TO_BL2=1
+clean_build $fvp_common_flags RESET_TO_BL2=1 FVP_TRUSTED_SRAM_SIZE=384
 clean_build $fvp_common_flags CROSS_COMPILE=arm-none-eabi- \
     ARCH=aarch32 AARCH32_SP=sp_min RESET_TO_BL2=1
 
