@@ -24,6 +24,7 @@ cc_src_repo_url="${cc_src_repo_url:-https://$arm_gerrit_url/tests/lava/test-defi
 cc_src_repo_tag="${cc_src_repo_tag:-kernel-team-workflow_2019-09-20}"
 scp_tools_src_repo_url="${scp_tools_src_repo_url:-https://$arm_gerrit_url/scp/tools-non-public}"
 tf_for_scp_tools_src_repo_url="https://$arm_gerrit_url/scp/test-framework"
+spm_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/trusted-firmware/spm.git"
 
 # Arm Coverity server.
 export coverity_host="${coverity_host:-coverity.cambridge.arm.com}"

@@ -48,12 +48,16 @@ clone_repo()
 			repo_url=$ci_src_repo_url
 			repo_name="TF-A-CI-Scripts"
 			;;
+		hafnium)
+			repo_url=$spm_src_repo_url
+			repo_name="hafnium"
+			;;
 		*)
 			echo "ERROR: Unknown repo to be cloned. sync.sh failed!"
 			exit 1
 			;;
 	esac
-	
+
 	# Remove old tree if it exists
 	if [ -d $1 ]; then
 		rm -rf "$1"
@@ -85,10 +89,12 @@ source "$CI_ROOT/utils.sh"
 clone_repo trusted-firmware-a
 clone_repo tf-a-tests
 clone_repo tf-a-ci-scripts
+clone_repo hafnium
 
 pull_changes trusted-firmware-a
 pull_changes tf-a-tests
 pull_changes tf-a-ci-scripts
+pull_changes hafnium
 
 # stop exiting automatically
 set +e
@@ -105,11 +111,17 @@ cd ../tf-a-tests
 sync_repo "internal TF-A-Tests Gerrit" $tftf_arm_gerrit_repo
 tftf_gerrit=$?
 
+# Update TF-A-CI-Scripts
 cd ../tf-a-ci-scripts
 sync_repo "internal TF-A-CI-Scripts Gerrit" $ci_arm_gerrit_repo
 ci_gerrit=$?
 
-if [ $github != 0 -o $tfa_gerrit != 0 -o $tftf_gerrit != 0 -o $ci_gerrit != 0 ]
+# Update Hafnium
+cd ../hafnium
+sync_repo "internal Hafnium Gerrit" $spm_arm_gerrit_repo
+spm_gerrit=$?
+
+if [ $github != 0 -o $tfa_gerrit != 0 -o $tftf_gerrit != 0 -o $ci_gerrit != 0 -o $spm_gerrit != 0 ]
 then
 	exit 1
 fi
