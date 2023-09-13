@@ -1068,7 +1068,7 @@ apply_patch() {
 		echo "Applying ${1:?}..."
 	fi
 
-	if git apply --reverse --check < "$ci_root/patch/$1"; then
+	if git apply --reverse --check < "$ci_root/patch/$1" 2> /dev/null; then
 		echo "Skipping already applied ${1:?}"
 		return 0
 	fi
