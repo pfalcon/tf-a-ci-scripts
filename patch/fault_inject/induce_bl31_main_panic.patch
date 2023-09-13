@@ -1,11 +1,11 @@
 diff --git a/bl31/bl31_main.c b/bl31/bl31_main.c
-index e70eb5584..3fb1e14b3 100644
+index cae55f314..2a0951d49 100644
 --- a/bl31/bl31_main.c
 +++ b/bl31/bl31_main.c
-@@ -196,6 +196,8 @@ void bl31_main(void)
- 	 * from BL31
- 	 */
- 	bl31_plat_runtime_setup();
+@@ -216,6 +216,8 @@ void bl31_main(void)
+ 	PMF_CAPTURE_TIMESTAMP(bl_svc, BL31_EXIT, PMF_CACHE_MAINT);
+ 	console_flush();
+ #endif
 +
 +	panic();
  }
