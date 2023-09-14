@@ -7,6 +7,8 @@
 
 set -ex
 
+. tf-a-ci-scripts/eclair/analyze_common2.sh
+
 env
 
 cd ${WORKSPACE}/trusted-firmware-a
