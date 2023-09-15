@@ -12,6 +12,10 @@ set -ex
 env
 
 cd ${WORKSPACE}/trusted-firmware-a
+# "make clean" seems to may leave some traces from previous builds, so start
+# with removing the build dir. Still issue make clean, as it's best practice
+# (for ECLAIR processing too).
+rm -rf build/
 make clean DEBUG=${DEBUG}
 
 # Replace '$(PWD)' with the *current* $PWD.
