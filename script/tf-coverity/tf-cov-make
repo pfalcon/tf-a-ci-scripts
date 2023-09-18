@@ -206,6 +206,9 @@ clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} COT_DESC_IN_DTB=1 USE_ROMLIB=1
 # PSA FWU support
 clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} ARM_GPT_SUPPORT=1 PSA_FWU_SUPPORT=1 USE_ROMLIB=1 FVP_TRUSTED_SRAM_SIZE=384
 
+# PSA Crypto support
+clean_build $fvp_common_flags ${ARM_TBB_OPTIONS} PSA_CRYPTO=1 FVP_TRUSTED_SRAM_SIZE=384
+
 # SME and HCX features
 clean_build $fvp_common_flags ENABLE_SME_FOR_NS=1 ENABLE_FEAT_HCX=1
 
