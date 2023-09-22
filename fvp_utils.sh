@@ -506,4 +506,14 @@ gen_gpt_bin() {
     archive_file "fip_gpt.bin"
 }
 
+#corrupt GPT image header and archive it
+corrupt_gpt_bin() {
+    bin="${1:?}"
+
+    # Primary GPT header is present in LBA-1 second block after MBR
+    # empty the primary GPT header forcing to use backup GPT header
+    # and backup GPT entries.
+    dd if=/dev/zero of=$bin bs=512 seek=1 count=1 conv=notrunc
+}
+
 set +u

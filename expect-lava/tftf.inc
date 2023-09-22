@@ -1,0 +1,22 @@
+#
+# Copyright (c) 2023 Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+# Expect script for Trusted Firmware Test Framework
+#
+
+prompt='Booting trusted firmware test framework'
+failures='Panic:'
+expect_string+=("i;${prompt};;${failures}")
+
+prompt='Running at NS-EL(1|2)'
+expect_string+=("i;${prompt}")
+
+prompt='Tests Failed  : 0'
+failures='Unhandled exception on |Tests Failed  : [^0]'
+expect_string+=("i;${prompt};;${failures}")
+
+prompt='Exiting tests.'
+failures='Tests Passed  : 0'
+expect_string+=("i;${prompt};;${failures}")
