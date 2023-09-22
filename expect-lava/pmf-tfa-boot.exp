@@ -7,16 +7,16 @@
 #
 
 prompt='PMF:cpu 0	tid 0'
-expect_string+=("i,${prompt}")
+expect_string+=("i;${prompt}")
 
 prompt='PMF:cpu 0	tid 1'
-expect_string+=("i,${prompt}")
+expect_string+=("i;${prompt}")
 
 prompt='PMF:cpu 0	tid 2'
-expect_string+=("i,${prompt}")
+expect_string+=("i;${prompt}")
 
 prompt='PMF:cpu 0	tid 3'
-expect_string+=("i,${prompt}")
+expect_string+=("i;${prompt}")
 
 prompt='PMF:cpu 0	tid 4'
-expect_string+=("i,${prompt}")
+expect_string+=("i;${prompt}")
