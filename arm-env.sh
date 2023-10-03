@@ -25,6 +25,9 @@ cc_src_repo_tag="${cc_src_repo_tag:-kernel-team-workflow_2019-09-20}"
 scp_tools_src_repo_url="${scp_tools_src_repo_url:-https://$arm_gerrit_url/scp/tools-non-public}"
 tf_for_scp_tools_src_repo_url="https://$arm_gerrit_url/scp/test-framework"
 spm_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/trusted-firmware/spm.git"
+spm_proj_ref_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/trusted-firmware/spm/project/reference.git"
+spm_prebuilts_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/trusted-firmware/spm/prebuilts.git"
+spm_driver_linux_arm_gerrit_repo="ssh://$arm_gerrit_url:29418/trusted-firmware/spm/driver/linux.git"
 
 # Arm Coverity server.
 export coverity_host="${coverity_host:-coverity.cambridge.arm.com}"

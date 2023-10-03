@@ -25,11 +25,12 @@ sync_repo()
 	return $result
 }
 
-# Clone the selected repo from tf.org
+# Clone the selected repo, including submodules, if applicable, from tf.org
 #
 # Some variables utilised inside this function come from utils.sh
 #
 # $1 = repo to clone
+# $2 = additional parameters passed to clone command
 clone_repo()
 {
 	local repo_url
@@ -58,13 +59,23 @@ clone_repo()
 			;;
 	esac
 
+	case $2 in
+		--recurse-submodules)
+			;;
+		*)
+			echo "ERROR: Unknown parameter passed to clone command. sync.sh failed!"
+			exit 1
+			;;
+	esac
+
 	# Remove old tree if it exists
 	if [ -d $1 ]; then
 		rm -rf "$1"
 	fi
+
 	# Fresh clone
 	echo Cloning $repo_name from trustedfirmware.org...
-	git clone $repo_url
+	git clone $2 $repo_url
 }
 
 # Pull changes from tf.org to the local repo
@@ -89,11 +100,14 @@ source "$CI_ROOT/utils.sh"
 clone_repo trusted-firmware-a
 clone_repo tf-a-tests
 clone_repo tf-a-ci-scripts
-clone_repo hafnium
+clone_repo hafnium --recurse-submodules
 
 pull_changes trusted-firmware-a
 pull_changes tf-a-tests
 pull_changes tf-a-ci-scripts
+pull_changes hafnium/project/reference
+pull_changes hafnium/prebuilts
+pull_changes hafnium/driver/linux
 pull_changes hafnium
 
 # stop exiting automatically
@@ -116,12 +130,28 @@ cd ../tf-a-ci-scripts
 sync_repo "internal TF-A-CI-Scripts Gerrit" $ci_arm_gerrit_repo
 ci_gerrit=$?
 
+# Update project/reference submodule of Hafnium
+cd ../hafnium/project/reference
+sync_repo "internal Hafnium project/reference Gerrit" $spm_proj_ref_arm_gerrit_repo
+spm_proj_ref_gerrit=$?
+
+# Update prebuilts submodule of Hafnium
+cd ../../prebuilts
+sync_repo "internal Hafnium prebuilts Gerrit" $spm_prebuilts_arm_gerrit_repo
+spm_prebuilts_gerrit=$?
+
+# Update driver/linux submodule of Hafnium
+cd ../driver/linux
+sync_repo "internal Hafnium driver/linux Gerrit" $spm_driver_linux_arm_gerrit_repo
+spm_driver_linux_gerrit=$?
+
 # Update Hafnium
-cd ../hafnium
+cd ../../
 sync_repo "internal Hafnium Gerrit" $spm_arm_gerrit_repo
 spm_gerrit=$?
 
-if [ $github != 0 -o $tfa_gerrit != 0 -o $tftf_gerrit != 0 -o $ci_gerrit != 0 -o $spm_gerrit != 0 ]
+if [ $github != 0 -o $tfa_gerrit != 0 -o $tftf_gerrit != 0 -o $ci_gerrit != 0 -o $spm_gerrit != 0 ] ||
+   [ $spm_proj_ref_gerrit != 0 -o $spm_prebuilts_gerrit != 0 -o $spm_driver_linux_gerrit != 0 ];
 then
 	exit 1
 fi
