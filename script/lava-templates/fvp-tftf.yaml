@@ -3,6 +3,7 @@ metadata:
   test_config: ${test_config}
   fvp_model: ${model}
   build_url: ${BUILD_URL}
+  job_template: fvp-tftf.yaml
 
 $(if [ -n "${gerrit_url}" ]; then
 	cat <<-YAML
