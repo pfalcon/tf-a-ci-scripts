@@ -22,8 +22,8 @@ P	0x05	fsbl2	Binary	mmc0	0x00044400	tf-a-stm32mp157c-ev1.stm32
 P	0x06	metadata1	Binary	mmc0	0x00084400	metadata.bin
 P	0x07	metadata2	Binary	mmc0	0x000C4400	metadata.bin
 P	0x08	fip-a	FIP	mmc0	0x00104400	fip-stm32mp157c-ev1-trusted.bin
-PED	0x09	fip-b	FIP	mmc0	0x00504400	none
-PED	0x0A	u-boot-env	Binary	mmc0	0x00904400	none
+PE	0x09	fip-b	FIP	mmc0	0x00504400	none
+PE	0x0A	u-boot-env	Binary	mmc0	0x00904400	none
 EOF
         ;;
     esac
