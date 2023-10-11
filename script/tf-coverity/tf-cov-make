@@ -262,6 +262,10 @@ make $(common_flags) PLAT=rdn2 ${ARM_TBB_OPTIONS} all
 # RAS Extension Support
 make $(common_flags) PLAT=rdn2 ${ARM_TBB_OPTIONS} ENABLE_FEAT_RAS=1 \
     RAS_FFH_SUPPORT=1 HANDLE_EA_EL3_FIRST_NS=1 SDEI_SUPPORT=1 SPM_MM=1 all
+# SPMC At EL3 Support
+make $(common_flags) PLAT=rdn2 ${ARM_TBB_OPTIONS} SPMC_AT_EL3=1 SPD=spmd \
+    SPMD_SPM_AT_SEL2=0 BL32=1 SPMC_AT_EL3_SEL0_SP=1 EL3_EXCEPTION_HANDLING=1 \
+    PLAT_RO_XLAT_TABLES=1 all
 
 #
 # Neoverse N1 SDP platform
