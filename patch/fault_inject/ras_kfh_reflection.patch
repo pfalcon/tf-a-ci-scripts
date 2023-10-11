@@ -1,8 +1,8 @@
-diff --git a/bl31/aarch64/ea_delegate.S b/bl31/aarch64/ea_delegate.S
-index c6790a2f9..c67fa30ee 100644
---- a/bl31/aarch64/ea_delegate.S
-+++ b/bl31/aarch64/ea_delegate.S
-@@ -256,6 +256,14 @@ skip_loop_ctr:
+diff --git a/bl31/aarch64/runtime_exceptions.S b/bl31/aarch64/runtime_exceptions.S
+index 04659da62..56416215b 100644
+--- a/bl31/aarch64/runtime_exceptions.S
++++ b/bl31/aarch64/runtime_exceptions.S
+@@ -696,6 +696,14 @@ subtract_elr_el3:
  	sub	x28, x28, #4
  skip_smc_check:
  	msr	elr_el3, x28
@@ -18,7 +18,7 @@ index c6790a2f9..c67fa30ee 100644
  	ldr	x30, [sp, #CTX_GPREGS_OFFSET + CTX_GPREG_LR]
  	exception_return
 diff --git a/services/arm_arch_svc/arm_arch_svc_setup.c b/services/arm_arch_svc/arm_arch_svc_setup.c
-index bb042c70e..a4b488005 100644
+index 57d211ed7..7df40e2c2 100644
 --- a/services/arm_arch_svc/arm_arch_svc_setup.c
 +++ b/services/arm_arch_svc/arm_arch_svc_setup.c
 @@ -14,9 +14,30 @@

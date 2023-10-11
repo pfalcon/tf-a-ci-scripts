@@ -164,7 +164,7 @@ clean_build $fvp_common_flags CROSS_COMPILE=arm-none-eabi- \
 
 # RAS Extension Support
 clean_build $fvp_common_flags EL3_EXCEPTION_HANDLING=1 ENABLE_FEAT_RAS=1 \
-    RAS_FFH_SUPPORT=1 FAULT_INJECTION_SUPPORT=1 HANDLE_EA_EL3_FIRST_NS=1 \
+    FAULT_INJECTION_SUPPORT=1 HANDLE_EA_EL3_FIRST_NS=1 \
     SDEI_SUPPORT=1 PLATFORM_TEST_RAS_FFH=1
 
 # EA handled in EL3 first
@@ -264,7 +264,8 @@ make $(common_flags) PLAT=rdv1mc ${ARM_TBB_OPTIONS} CSS_SGI_CHIP_COUNT=4 all
 make $(common_flags) PLAT=rdn2 ${ARM_TBB_OPTIONS} all
 # RAS Extension Support
 make $(common_flags) PLAT=rdn2 ${ARM_TBB_OPTIONS} ENABLE_FEAT_RAS=1 \
-    RAS_FFH_SUPPORT=1 HANDLE_EA_EL3_FIRST_NS=1 SDEI_SUPPORT=1 SPM_MM=1 all
+    HANDLE_EA_EL3_FIRST_NS=1 SDEI_SUPPORT=1 SPM_MM=1 all
+
 # SPMC At EL3 Support
 make $(common_flags) PLAT=rdn2 ${ARM_TBB_OPTIONS} SPMC_AT_EL3=1 SPD=spmd \
     SPMD_SPM_AT_SEL2=0 BL32=1 SPMC_AT_EL3_SEL0_SP=1 EL3_EXCEPTION_HANDLING=1 \
