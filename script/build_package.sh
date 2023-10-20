@@ -336,6 +336,29 @@ build_fip() {
 	)
 }
 
+# Build any extra rule from TF-A makefile with supplied arguments.
+#
+# This is useful in case you need to build something else than firmware binaries
+# or the FIP.
+build_tf_extra() {
+	(
+	tf_extra_rules=${tf_extra_rules:?}
+	echo "Building extra TF rule(s): $tf_extra_rules"
+	echo "  Arguments: $@"
+
+	local tf_env="$workspace/tf.env"
+
+	if [ -f "$tf_env" ]; then
+		set -a
+		source "$tf_env"
+		set +a
+	fi
+
+	make -C "$tf_root" $(cat "$tf_config_file") DEBUG="$DEBUG" V=1 "$@" \
+		${tf_extra_rules} &>>"$build_log" || fail_build
+	)
+}
+
 fip_update() {
 	# Before the update process, check if the given image is supported by
 	# the fiptool. It's assumed that both fiptool and cert_create move in
