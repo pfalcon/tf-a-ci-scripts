@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+#
+# Copyright (c) 2023, Arm Limited. All rights reserved.
+#
+# SPDX-License-Identifier: BSD-3-Clause
+#
+
+# This run fragment is used to generate boot certificates and key files.
+
+post_tf_build() {
+	local bl31_key_file="${workspace}/bl31-key.pem"
+	local bl32_key_file="${workspace}/bl32-key.pem"
+	local bl33_key_file="${workspace}/bl33-key.pem"
+	local trusted_key_file="${workspace}/trusted-private-key.pem"
+	local non_trusted_key_file="${workspace}/non-trusted-private-key.pem"
+
+	local key_files=(
+		"$bl31_key_file"
+		"$bl33_key_file"
+		"$trusted_key_file"
+		"$non_trusted_key_file"
+	)
+
+	# BL32 key only gets generated if building TF-A with an SPD.
+	if upon "$(get_tf_opt SPD)"; then
+	    key_files+=("$bl32_key_file")
+	fi
+
+	# Generate the boot certificates and key files.
+	#
+	# Note that even if we do not generate a FIP, TF-A build system still
+	# demands a BL33 image so provide a dummy one.
+	tf_extra_rules="certificates" build_tf_extra		\
+		BL33="$(mktempfile)"				\
+		GENERATE_COT=1					\
+		CREATE_KEYS=1					\
+		SAVE_KEYS=1					\
+		BL31_KEY="$bl31_key_file"			\
+		BL32_KEY="$bl32_key_file"			\
+		BL33_KEY="$bl33_key_file"			\
+		TRUSTED_WORLD_KEY="$trusted_key_file"		\
+		NON_TRUSTED_WORLD_KEY="$non_trusted_key_file"	\
+
+
+	echo "Checking that the keys got correctly generated and saved..."
+
+	for i in "${!key_files[@]}"; do
+		# A valid private key file in PEM format starts with:
+		# -----BEGIN PRIVATE KEY-----
+		grep -q 'BEGIN PRIVATE KEY' "${key_files[$i]}" || \
+			(echo "Key file \"${key_files[$i]}\" is incorrect." && exit 1)
+	done
+
+	echo "All keys verified."
+}
