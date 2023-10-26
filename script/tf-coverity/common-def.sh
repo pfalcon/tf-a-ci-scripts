@@ -90,7 +90,5 @@ TF_M_EXTRAS_URL_REPO=https://git.trustedfirmware.org/TF-M/tf-m-extras.git
 
 ARMCLANG_PATH="$(set_armclang_toolchain)"
 
-CRYPTOCELL_LIB_PATH=/arm/projectscratch/ssg/trusted-fw/dummy-crypto-lib
-
 TBB_OPTIONS="TRUSTED_BOARD_BOOT=1 GENERATE_COT=1 MBEDTLS_DIR=$(pwd)/mbedtls"
 ARM_TBB_OPTIONS="$TBB_OPTIONS ARM_ROTPK_LOCATION=devel_rsa"
