@@ -62,6 +62,8 @@ clone_repo()
 	case $2 in
 		--recurse-submodules)
 			;;
+		"")
+			;;
 		*)
 			echo "ERROR: Unknown parameter passed to clone command. sync.sh failed!"
 			exit 1
