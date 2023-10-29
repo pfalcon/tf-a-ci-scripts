@@ -1,5 +1,5 @@
 device_type: juno
-job_name: ${test_config}
+job_name: tf-juno
 
 $tags
 $juno_revision

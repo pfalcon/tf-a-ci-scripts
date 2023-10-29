@@ -1,5 +1,5 @@
 device_type: juno
-job_name: juno-linux-${test_config}
+job_name: tf-juno
 
 context:
   bootloader_prompt: $bootloader_prompt
