@@ -724,6 +724,10 @@ clean_build PLAT=qemu $(common_flags) ${TBB_OPTIONS} MBOOT_EL_HASH_ALG=sha256 ME
 # Transfer List
 clean_build PLAT=qemu $(common_flags) TRANSFER_LIST=1
 
+# FEAT_RME
+clean_build PLAT=qemu $(common_flags) ENABLE_RME=1 \
+        QEMU_USE_GIC_DRIVER=QEMU_GICV3
+
 clean_build PLAT=qemu_sbsa $(common_flags)
 
 # QEMU with SPM support
