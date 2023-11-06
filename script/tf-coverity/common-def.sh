@@ -81,6 +81,13 @@ MBED_TLS_URL_REPO=https://github.com/ARMmbed/mbedtls.git
 # cryptography support (e.g. for Trusted Board Boot feature).
 MBED_TLS_SOURCES_TAG="mbedtls-3.4.1"
 
+# TF-M variables
+TF_M_TESTS_DIR=tf-m-tests
+TF_M_TESTS_URL_REPO=https://git.trustedfirmware.org/TF-M/tf-m-tests.git
+
+TF_M_EXTRAS_DIR=tf-m-extras
+TF_M_EXTRAS_URL_REPO=https://git.trustedfirmware.org/TF-M/tf-m-extras.git
+
 ARMCLANG_PATH="$(set_armclang_toolchain)"
 
 CRYPTOCELL_LIB_PATH=/arm/projectscratch/ssg/trusted-fw/dummy-crypto-lib
