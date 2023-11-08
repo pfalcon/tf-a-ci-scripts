@@ -108,9 +108,6 @@ exclude_paths = [
     # Exclude the following files used for STM32MP host tools (cert_create)
     ("plat/st/stm32mp1/stm32mp1_tbb_cert.c", "Used to build STM32MP cert_create"),
 
-    # Exclude the IO files
-    ("drivers/io/io_dummy.c", "None of the upstream platforms using this file"),
-
     # Exclude The following files used to wrap external test code
     ("plat/arm/board/tc/rss_ap_test_stubs.c", "Only used for testing on arm/tc platform"),
     ("plat/arm/board/tc/rss_ap_tests.c", "Only used for testing on arm/tc platform"),
