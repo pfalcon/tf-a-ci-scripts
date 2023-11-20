@@ -1,1 +1,2 @@
 PROJECT=reference
+PLATFORM=secure_tc
