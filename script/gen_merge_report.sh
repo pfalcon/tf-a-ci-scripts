@@ -33,6 +33,7 @@ create_merge_cfg() {
 python3 - << EOF
 import json
 import os
+import re
 
 server = os.getenv("JENKINS_URL", "https://jenkins.oss.arm.com/")
 merge_json = {} # json object
@@ -48,6 +49,8 @@ for index, build_number in enumerate(test_results):
         merge_number += 1
         base_url = "{}job/{}/{}/{}".format(
                         server, data['job'], build_number, "$ARTIFACT_PATH")
+        _group_test_config = re.match(f'^[0-9%]*(?:${TEST_GROUPS}%)?(.+?)\.test', test_files[index])
+        tf_configuration = _group_test_config.groups()[0] if _group_test_config else 'N/A'
         _files.append( {'id': build_number,
                         'config': {
                                     'type': 'http',
@@ -58,7 +61,8 @@ for index, build_number in enumerate(test_results):
                                     'type': 'http',
                                     'origin': "{}/{}".format(
                                         base_url, "$INFO_PATH")
-                                }
+                                },
+                         'tf-configuration': tf_configuration
                         })
 merge_json = { 'files' : _files }
 with open("$MERGE_CONFIGURATION", 'w') as outfile:
@@ -78,14 +82,6 @@ out_report = "$out_report"
 confs = ""
 with open("$REPORT_JSON") as json_file:
     data = json.load(json_file)
-test_files = data['test_files']
-test_results = data['test_results']
-for index, build_number in enumerate(test_results):
-  test_file = test_files[index]
-  test_configuration = test_file.rsplit('%', 1)
-  if len(test_configuration) > 1:
-    confs += '<a target="_blank" href="artifact/${jenkins_archive_folder}/${COVERAGE_FOLDER}/{}/index.html">{}</a>'.format(build_number,
-      test_configuration[1])
 
 with open(cov_html, "r") as f:
     html_content = f.read()
@@ -168,14 +164,8 @@ s = s + """
             </tbody>
         </table>
         <p>
-        <button onclick="window.open('artifact/${jenkins_archive_folder}/${COVERAGE_FOLDER}/index.html','_blank');">Total Coverage Report</button>
+        <button onclick="window.open('artifact/${jenkins_archive_folder}/${COVERAGE_FOLDER}/index.html','_blank');">Total Coverage Report (${#list_of_merged_builds[@]} out of ${number_of_files_to_merge})</button>
         </p>
-        <div class="dropdown">
-          <button class="dropbtn">Coverage Reports($number_of_files_to_merge)</button>
-          <div class="dropdown-content">
-          """ + confs + """
-          </div>
-        </div>
     </div>
 
 <script>
@@ -187,6 +177,54 @@ with open(out_report, "a") as f:
     f.write(s)
 EOF
 }
+
+generate_cols() {
+  echo "List of merged build ids:${list_of_merged_builds[@]}"
+python3 - << EOF
+merged_ids=[int(i) for i in "${list_of_merged_builds[@]}".split()]
+s = """
+
+  <script>
+  window.onload = function() {
+  """ + f"const mergedIds={merged_ids}" + """
+    document.querySelector('#tf-report-main table').querySelectorAll("tr").forEach((row,i) => {
+    const cell = document.createElement(i ? "td" : "th")
+    const button = document.createElement("button")
+    button.textContent = "Report"
+    if (i) {
+        merged = false
+        if (q = row.querySelector('td.success a.buildlink')) {
+          href = q.href
+          buildId = href.split("/").at(-2)
+          if (mergedIds.include(buildId)) {
+              cell.classList.add("success")
+              const url = href.replace('console', 'artifact/trace_report/index.html')
+              button.addEventListener('click', () => {
+                  window.open(url, "_blank")
+              })
+              cell.appendChild(button)
+              merged = true
+          }
+        }
+        if (!merged) {
+            cell.innerText = "N/A"
+            cell.classList.add("failure")
+        }
+    }
+    else {
+        cell.innerText = "Code Coverage"
+    }
+    row.appendChild(cell)
+    })
+  }
+  </script>
+"""
+with open("$1", "a") as f:
+    f.write(s)
+EOF
+}
+
+
 OUTDIR=""
 index=""
 case "$TEST_GROUPS" in
@@ -212,16 +250,18 @@ cd -
 mkdir -p $OUTDIR
 pushd $OUTDIR
     number_of_files_to_merge=$(create_merge_cfg)
-    echo "Merging $number_of_files_to_merge coverage files..."
+    echo "Merging from $number_of_files_to_merge code coverage reports..."
     # Only merge when more than 1 test result
     if [ "$number_of_files_to_merge" -lt 2 ] ; then
         echo "Only one file to merge."
         exit 0
     fi
 
-    bash ${WORKSPACE}/qa-tools/coverage-tool/coverage-reporting/merge.sh \
-        -j $MERGE_CONFIGURATION -l ${OUTDIR}/${COVERAGE_FOLDER} -w $WORKSPACE -c -g
+     source ${WORKSPACE}/qa-tools/coverage-tool/coverage-reporting/merge.sh \
+        -j $MERGE_CONFIGURATION -l ${OUTDIR}/${COVERAGE_FOLDER} -w $WORKSPACE -c
 
-    generate_header ${REPORT_HTML}
+    merged_status && generate_header ${REPORT_HTML}
+    generate_cols ${REPORT_HTML}
     cp ${REPORT_HTML} $OUTDIR
+
 popd

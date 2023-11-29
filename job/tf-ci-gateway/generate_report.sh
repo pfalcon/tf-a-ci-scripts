@@ -62,6 +62,9 @@ if [ "$CI_ROOT" ]; then
 		--meta-data html:coverity.data \
 		|| true
 
-	source $CI_ROOT/script/gen_merge_report.sh "${WORKSPACE}/report.json" \
-		"${WORKSPACE}/report.html"
+    # Only call to merge reports if the test groups are for code coverage
+    if [[ $TEST_GROUPS == *"code-coverage"* ]]; then
+  	   source $CI_ROOT/script/gen_merge_report.sh "${WORKSPACE}/report.json" \
+  		   "${WORKSPACE}/report.html"
+    fi
 fi
