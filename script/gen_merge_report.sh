@@ -19,16 +19,16 @@ else
   JSON_PATH='config_file.json'
 fi
 
-#################################################################
+###############################################################################
 # Create json file for input to the merge.sh for Code Coverage
 # Globals:
-#   REPORT_JSON: Json file for SCP and TF ci gateway test results
+#   REPORT_JSON: Json file with TF ci gateway builder test results
 #   MERGE_CONFIGURATION: Json file to be used as input to the merge.sh
 # Arguments:
 #   None
 # Outputs:
 #   Print number of files to be merged
-################################################################
+###############################################################################
 create_merge_cfg() {
 python3 - << EOF
 import json
@@ -71,7 +71,29 @@ print(merge_number)
 EOF
 }
 
-generate_header() {
+###############################################################################
+# Append a summary table to an html file (report)that will be interpreted by
+# the Jenkins html plugin
+#
+# If there is more than one code coverage report and is merged  successfully,
+# then a summary html/javascript table is created at the end of the
+# html file containing the merged function, line and branch coverage
+# percentages.
+# Globals:
+#   OUTDIR: Path where the output folders are
+#   COVERAGE_FOLDER: Folder name where the LCOV files are
+#   REPORT_JSON: Json file with TF ci gateway builder test results
+#   jenkins_archive_folder: Folder name where Jenkins archives files
+#   list_of_merged_builds: Array with a list of individual successfully merged
+#                          jenkins build id's
+#   number_of_files_to_merge: Indicates the number of individual jobs that have
+#                             code coverage and ran successfully
+# Arguments:
+#   1: HTML report to be appended the summary table
+# Outputs:
+#   Appended HTML file with the summary table of merged code coverage
+###############################################################################
+generate_code_coverage_summary() {
     local cov_html=${OUTDIR}/${COVERAGE_FOLDER}/index.html
     local out_report=$1
 python3 - << EOF
@@ -178,7 +200,23 @@ with open(out_report, "a") as f:
 EOF
 }
 
-generate_cols() {
+###############################################################################
+# Append a column for each row corresponding to each build with a successful
+# code coverage report
+#
+# The column contains an html button that links to the individual code coverage
+# html report or 'N/A' if report cannot be found or build was a failure.
+# The column is added to the main table where all the tests configurations
+# status are shown.
+# Globals:
+#   list_of_merged_builds: Array with a list of individual successfully merged
+#                          jenkins build id's
+# Arguments:
+#   1: HTML report to be appended the summary table
+# Outputs:
+#   Appended HTML file with the column added to the main hmtl table
+###############################################################################
+generate_code_coverage_column() {
   echo "List of merged build ids:${list_of_merged_builds[@]}"
 python3 - << EOF
 merged_ids=[int(i) for i in "${list_of_merged_builds[@]}".split()]
@@ -252,16 +290,19 @@ pushd $OUTDIR
     number_of_files_to_merge=$(create_merge_cfg)
     echo "Merging from $number_of_files_to_merge code coverage reports..."
     # Only merge when more than 1 test result
-    if [ "$number_of_files_to_merge" -lt 2 ] ; then
+    if [ "$number_of_files_to_merge" -lt 2 ]; then
         echo "Only one file to merge."
         exit 0
     fi
 
      source ${WORKSPACE}/qa-tools/coverage-tool/coverage-reporting/merge.sh \
         -j $MERGE_CONFIGURATION -l ${OUTDIR}/${COVERAGE_FOLDER} -w $WORKSPACE -c
+    # backward compatibility with old qa-tools
+    [ $? -eq 0 ] && status=true || status=false
 
-    merged_status && generate_header ${REPORT_HTML}
-    generate_cols ${REPORT_HTML}
-    cp ${REPORT_HTML} $OUTDIR
+    # merged_status is set at 'merge.sh' indicating if merging reports was ok
+    ${merged_status:-$status} && generate_code_coverage_summary "${REPORT_HTML}"
+    generate_code_coverage_column "${REPORT_HTML}"
+    cp "${REPORT_HTML}" "$OUTDIR"
 
 popd
