@@ -211,6 +211,8 @@ EOF
 # Globals:
 #   list_of_merged_builds: Array with a list of individual successfully merged
 #                          jenkins build id's
+#   individual_report_folder: Location within the jenkins job worker where
+#                             resides the code coverage html report.
 # Arguments:
 #   1: HTML report to be appended the summary table
 # Outputs:
@@ -236,7 +238,7 @@ s = """
           buildId = href.split("/").at(-2)
           if (mergedIds.include(buildId)) {
               cell.classList.add("success")
-              const url = href.replace('console', 'artifact/trace_report/index.html')
+              const url = href.replace('console', 'artifact/${individual_report_folder}')
               button.addEventListener('click', () => {
                   window.open(url, "_blank")
               })
@@ -268,13 +270,19 @@ index=""
 case "$TEST_GROUPS" in
     scp*)
             project="scp"
-            jenkins_archive_folder=reports;;
+            jenkins_archive_folder=reports
+            individual_report_folder=html/qa-code-coverage/lcov/index.html
+            ;;
     tf*)
             project="trusted_firmware"
-            jenkins_archive_folder=merge/outdir;;
+            jenkins_archive_folder=merge/outdir
+            individual_report_folder=trace_report/index.html
+            ;;
     spm*)
             project="hafnium"
-            jenkins_archive_folder=merge/outdir;;
+            jenkins_archive_folder=merge/outdir
+            individual_report_folder=trace_report/index.html
+            ;;
     *)
             exit 0;;
 esac

@@ -63,7 +63,8 @@ if [ "$CI_ROOT" ]; then
 		|| true
 
     # Only call to merge reports if the test groups are for code coverage
-    if [[ $TEST_GROUPS == *"code-coverage"* ]]; then
+    if [[ $TEST_GROUPS == *"code-coverage"* ]] ||
+    [[ $TEST_GROUPS == "scp-boot-tests-coverage" ]]; then
   	   source $CI_ROOT/script/gen_merge_report.sh "${WORKSPACE}/report.json" \
   		   "${WORKSPACE}/report.html"
     fi

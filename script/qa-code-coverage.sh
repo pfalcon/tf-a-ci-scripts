@@ -30,7 +30,8 @@ INFO_FILE=${CODE_COVERAGE_FOLDER}/coverage.info
 REPORT_FOLDER=${CODE_COVERAGE_FOLDER}/lcov
 
 QA_REPO=${QA_TOOLS_REPO:-$QA_REPO_PUBLIC}
-QA_REFSPEC=${QA_TOOLS_BRANCH:-master}
+QA_REFSPEC=${QA_TOOLS_BRANCH:-$TEST_DEFINITIONS_TAG}
+QA_REFSPEC=${QA_REFSPEC:-stable}
 
 
 ################################################################################
