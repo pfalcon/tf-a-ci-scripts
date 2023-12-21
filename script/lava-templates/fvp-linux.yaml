@@ -27,7 +27,7 @@ timeouts:
     lava-test-monitor:
       minutes: 5
     lava-test-interactive:
-      seconds: ${lava_timeout:-580}
+      seconds: ${lava_timeout:-280}
     lava-test-shell:
       seconds: 300
     http-download:

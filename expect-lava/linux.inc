@@ -11,7 +11,7 @@ if [ -z "${num_cpus}" ]; then
 	num_cpus=8
 fi
 
-expect_string+=('i;Linux version')
+expect_string+=('i;Linux_ version')
 failures='CPU[0-9]+: failed to come online'
 expect_string+=("i;SMP: Total of ${num_cpus} processors activated;;${failures}")
 expect_string+=('i;Freeing unused kernel memory')
