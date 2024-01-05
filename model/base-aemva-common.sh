@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #
-# Copyright (c) 2019-2023, Arm Limited. All rights reserved.
+# Copyright (c) 2019-2024, Arm Limited. All rights reserved.
 #
 # SPDX-License-Identifier: BSD-3-Clause
 #
@@ -62,6 +62,9 @@ reset_var retain_flash
 
 reset_var nvcounter_version
 reset_var nvcounter_diag
+
+# Enable FEAT_MPAM
+reset_var has_mpam
 
 # Enable SMMUv3 functionality
 reset_var has_smmuv3_params
@@ -326,6 +329,13 @@ if [ "$fault_inject" = "1" ]; then
 -C cluster0.has_ras=2
 -C cluster0.error_record_feature_register='{"INJ":0x1,"ED":0x1,"UI":0x0,"FI":0x0,"UE":0x1,"CFI":0x0,"CEC":0x0,"RP":0x0,"DUI":0x0,"CEO":0x0}'
 -C cluster0.pseudo_fault_generation_feature_register='{"OF":false,"CI":false,"ER":false,"PN":false,"AV":false,"MV":false,"SYN":false,"UC":true,"UEU":true,"UER":false,"UEO":false,"DE":false,"CE":0,"R":false}'
+EOF
+fi
+
+if [ "$has_mpam" = "1" ]; then
+	cat <<EOF >>"$model_param_file"
+-C cluster0.has_mpam=2
+-C cluster1.has_mpam=2
 EOF
 fi
 
