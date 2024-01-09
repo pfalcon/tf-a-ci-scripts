@@ -258,7 +258,9 @@ if __name__ == "__main__":
         print("https://scan.coverity.com/projects/arm-software-arm-trusted-firmware/builds/new?tab=upload")
     print("-----------------------------------------------------------------")
 
-    print_coverage("cov-int", args.tf, coverity_tf_conf.exclude_paths, "tf_coverage.log")
-    with open("tf_coverage.log") as log_file:
-        for line in log_file:
-            print(line, end="")
+    # Temporary workaround to fix an issue with non utf-8 characters in the
+    # directory path name
+    #print_coverage("cov-int", args.tf, coverity_tf_conf.exclude_paths, "tf_coverage.log")
+    #with open("tf_coverage.log") as log_file:
+    #    for line in log_file:
+    #        print(line, end="")
