@@ -43,6 +43,8 @@ visibility: public
 actions:
 - deploy:
     to: fvp
+    failure_retry: 3
+    failure_retry_interval: 5
     images:
 
 $(for artefact in "${artefacts[@]:?}"; do
